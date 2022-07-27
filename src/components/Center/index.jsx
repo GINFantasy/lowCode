@@ -62,6 +62,7 @@ const Center = () => {
         setCurSideDrag(editor.find(v => v.key === i))
         setDownStyle(i)
     }
+    console.log('center',editor)
     return (
         <div className="center" >
             <div
