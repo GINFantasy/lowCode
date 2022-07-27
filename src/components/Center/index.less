@@ -1,0 +1,27 @@
+.center {
+    height: 100%;
+    margin: 0 3px;
+    padding: 5px;
+    flex-grow: 2;
+
+    .canvas {
+        height: 100%;
+        overflow: auto;
+        margin: 0 auto;
+        border-radius: 3px;
+        background-color: rgb(239, 241, 244);
+        box-shadow: 0 0 13px 2px #00000005;
+        position: relative;
+        transition: all 0.6s;
+
+        .active {
+            transition: none;
+        }
+    }
+
+    .static {
+        user-select: none;
+        position: absolute;
+    }
+
+}
