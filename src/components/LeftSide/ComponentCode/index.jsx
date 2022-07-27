@@ -2,6 +2,7 @@ import { useState, useContext } from 'react'
 import { Divider, Input, Button, message } from 'antd'
 
 import context from '../../../Context'
+import { toEvent } from '../../Libs/tool'
 
 import './index.css'
 
@@ -18,18 +19,9 @@ const ComponentCode = ({ handleContent }) => {
     const handleEvents = () => {
         const { key, events } = curSideDrag
         const eventName = Object.keys(events)[0]
-        const toEvent = () => {
-            try {
-                // eslint-disable-next-line
-                const r = eval(code)
-                return r
-            } catch (e) {
-                return alert(e.message)
-            }
-        }
         const next = v => ({
             ...v,
-            events: { [eventName]: { fn: toEvent, code } }
+            events: { [eventName]: { fn: toEvent(code), code } }
         })
         setEditor(editor.map(v => v.key === key ? next(v) : v))
         setCurSideDrag(next(curSideDrag))
