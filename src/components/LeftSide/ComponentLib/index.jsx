@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { Divider, Collapse } from 'antd'
 
 import libs from '../../Libs'
@@ -10,14 +10,16 @@ import './index.css'
 const { Panel } = Collapse
 
 const ComponentLib = ({ handleContent }) => {
-    const { editor, curSideDrag, setCurSideDrag } = useContext(context)
-    const wholeSize = useRef(Array.from({ length: libs.length }).fill([]))
-    // onDragStart开始拖拽时触发
-    const dragStart = (comp, v, C) => {
+    const { editor, setFreshEl } = useContext(context)
+    const [move, setMove] = useState(false)
+    const handleMouseDown = () => setMove(true)
+    const handleMouseMove = (comp, v, C) => {
+        if (!move) return
         const style = { width: '', height: '', ...defaultOriginCssStyle }
         const afterRender = `${v} ${C}`
         const { el, options } = comp
-        setCurSideDrag({
+        setFreshEl({
+            flag: true,
             el,
             afterRender,
             key: editor.length,
@@ -28,10 +30,8 @@ const ComponentLib = ({ handleContent }) => {
             options,
             events: { [options.events[0]]: null },
         })
-    }
-    const dragEnd = () => {
+        setMove(false)
         handleContent('lib')
-        if (curSideDrag) setCurSideDrag(false)
     }
     return (
         <>
@@ -45,16 +45,11 @@ const ComponentLib = ({ handleContent }) => {
                                     Object.keys(v[1]).map((C, oneIndex) => (
                                         <div
                                             className="el-comp"
-                                            draggable
                                             key={oneIndex}
-                                            onDragStart={(e) => dragStart(v[1][C], v[0], C)}
-                                            onDragEnd={dragEnd}
+                                            onMouseDown={handleMouseDown}
+                                            onMouseMove={(e) => handleMouseMove(v[1][C], v[0], C)}
                                         >
-                                            <div
-                                                ref={el => wholeSize.current[classifyIndex].push(el)}
-                                            >
-                                                {v[1][C].el()}
-                                            </div>
+                                            <div>{v[1][C].el()}</div>
                                         </div>
                                     ))
                                 }

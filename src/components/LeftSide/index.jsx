@@ -33,13 +33,15 @@ const PopconfirmTemp = props => (
         {...props}
     ></Popconfirm>
 )
+
 const LeftSide = () => {
     const [showComp, setShowComp] = useState(null)
     const {
         handleBackEditor,
         handleForwardEditor,
         handleSaveStore,
-        handleClearStore, handleReadme
+        handleClearStore,
+        handleReadme
     } = useContext(context)
     const handleContent = area => {
         const whoComp = moreContent.find(v => v[area])

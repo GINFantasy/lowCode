@@ -6,8 +6,8 @@ import context from '../../../Context'
 const { Option } = Select
 
 const EventListener = () => {
-    const { setEditor, editor, curSideDrag, setCurSideDrag } = useContext(context)
-    const { key, options, events } = curSideDrag
+    const { setEditor, editor, curSelectedEl, setCurSelectedEl } = useContext(context)
+    const { key, options, events } = curSelectedEl
     const selectChange = (_, { children }) => {
         const next = v => ({
             ...v,
@@ -15,7 +15,7 @@ const EventListener = () => {
         })
         const newEditor = editor.map(v => v.key === key ? next(v) : v)
         setEditor(newEditor)
-        setCurSideDrag(next(curSideDrag))
+        setCurSelectedEl(next(curSelectedEl))
     }
     return <div className="classify-props">
         <Divider className="prop-divider" orientation='left' plain>添加事件</Divider>

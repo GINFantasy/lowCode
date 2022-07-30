@@ -17,7 +17,6 @@ const defaultOriginCssStyle = {
     borderColor: '',
     backgroundColor: '',
     color: '',
-    borderLine: '',
     overflow: '',
 }
 
@@ -39,7 +38,7 @@ const defaultStyleConfig = {
     },
     border: {
         alias: '边框',
-        values: { borderLine: ['', 'solid', 'dashed', 'dotted', 'double'], borderColor: [...colors], },
+        values: { borderColor: [...colors], },
         inValues: {}
     },
     background: {

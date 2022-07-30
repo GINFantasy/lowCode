@@ -7,8 +7,8 @@ const { Option } = Select
 const timer = { id: 0 }
 
 const Style = () => {
-    const { setEditor, editor, curSideDrag, setCurSideDrag } = useContext(context)
-    const { key, options: { moreProps }, originStyle, style } = curSideDrag
+    const { setEditor, editor, curSelectedEl, setCurSelectedEl } = useContext(context)
+    const { key, options: { moreProps }, originStyle, style } = curSelectedEl
     const morePropsKey = Object.keys(moreProps)
     const handleChangeText = (e, prop) => {
         const { value } = e.target
@@ -21,7 +21,7 @@ const Style = () => {
         })
         const newEditor = editor.map(v => v.key === key ? next(v) : v)
         setEditor(newEditor)
-        setCurSideDrag(next(curSideDrag))
+        setCurSelectedEl(next(curSelectedEl))
     }
     const numberChange = (value, prop) => {
         clearTimeout(timer.id)
@@ -35,7 +35,7 @@ const Style = () => {
             })
             const newEditor = editor.map(v => v.key === key ? next(v) : v)
             setEditor(newEditor)
-            setCurSideDrag(next(curSideDrag))
+            setCurSelectedEl(next(curSelectedEl))
         }, 300)
     }
     const selectChange = (value, prop) => {
@@ -48,7 +48,7 @@ const Style = () => {
         })
         const newEditor = editor.map(v => v.key === key ? next(v) : v)
         setEditor(newEditor)
-        setCurSideDrag(next(curSideDrag))
+        setCurSelectedEl(next(curSelectedEl))
     }
     return <>
         {
@@ -79,7 +79,7 @@ const Style = () => {
                                                             <span className="props-title">{v2}:</span>
                                                             <InputNumber
                                                                 className="input"
-                                                                value={curSideDrag.style[v2]}
+                                                                value={curSelectedEl.style[v2]}
                                                                 onChange={e => numberChange(e, v2)}
                                                             ></InputNumber>
                                                         </>

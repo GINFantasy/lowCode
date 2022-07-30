@@ -15,17 +15,17 @@ const render = Comp => <Comp />
 
 const RightSide = () => {
     const [curSegmented, setCurSegmented] = useState('属性')
-    const { curSideDrag, editor, setEditor, setCurSideDrag } = useContext(context)
-    const { flag, key, options: { name } } = curSideDrag
+    const { curSelectedEl, editor, setEditor, setCurSelectedEl } = useContext(context)
+    const { flag, key, options: { name } } = curSelectedEl
     const handleDel = () => {
         const newEditor = editor.filter(v => v.key !== key)
         setEditor(newEditor)
-        setCurSideDrag(false)
+        setCurSelectedEl(false)
     }
     return (
         <div className="right-side">
             {
-                flag ? <NoneProp /> : (
+                !flag ? <NoneProp /> : (
                     <>
                         <div className="classify">
                             <Title level={4}>{name}</Title>

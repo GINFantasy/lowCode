@@ -11,8 +11,8 @@ import RightSide from './components/RightSide'
 // 存储前进与后退的历史数据
 const backEditor = []
 const forwardEditor = []
-const defaultCurSideDrag = { flag: true, options: { moreProps: {}, originStyle: {} }, style: {}, originStyle: {}, events: [] }
-const { success, warning } = message
+const defaultCurSideDrag = { flag: false, options: { moreProps: {}, originStyle: {} }, style: {}, originStyle: {}, events: [] }
+const { success, warning, error } = message
 
 const toSaveStore = editor => {
   store.setItem(editor)
@@ -32,50 +32,49 @@ const handleReadme = () => {
 const App = () => {
   // editor表示画布中的所有组件
   const [editor, handleEditor] = useState(store.getItem())
-  // curSideDrag代表当前拖拽/选中的组件
-  const [curSideDrag, handleCurSideDrag] = useState(defaultCurSideDrag)
+  // freshEl代表要新生成的组件
+  const [freshEl, setFreshEl] = useState({})
   const [canvasWidth, setCanvasWidth] = useState('100%')
+  const [curSelectedEl, handleCurSelectedEl] = useState(defaultCurSideDrag)
   const { Provider } = context
   // 拦截所有修改editor的操作，并追加至历史记录
   const setEditor = oneSet => {
     backEditor.push(oneSet[oneSet.length - 1])
     handleEditor(oneSet)
   }
-  const setCurSideDrag = oneSet => {
+  const setCurSelectedEl = oneSet => {
     if (!oneSet) oneSet = defaultCurSideDrag
-    handleCurSideDrag(oneSet)
+    handleCurSelectedEl(oneSet)
   }
+  // 后退
   const handleBackEditor = () => {
     if (!backEditor.length) {
-      warning('暂时没有要后退的操作')
+      error('暂时没有要后退的操作')
       return
     }
-    const discard = backEditor.pop()
-    discard && forwardEditor.push(discard)
-    const newData = [...backEditor]
-    const isNull = { ...newData[newData.length - 1] }
-    const next = !Object.keys(isNull).length ? false : isNull
-    setCurSideDrag(next)
-    handleEditor(newData)
+    forwardEditor.push(backEditor.pop())
+    const discard = backEditor[backEditor.length - 1]
+    const newData = editor.map(v => v.key === discard?.key ? discard : v)
+    setCurSelectedEl((!discard) ? false : discard)
+    handleEditor((!discard) ? [] : newData)
     success('已后退一次操作')
   }
+  // 前进
   const handleForwardEditor = () => {
     if (!forwardEditor.length) {
-      warning('暂时没有要前进的操作')
+      error('暂时没有要前进的操作')
       return
     }
-    const newData = [...forwardEditor]
-    const isNull = { ...newData[newData.length - 1] }
-    const next = !Object.keys(isNull).length ? false : isNull
-    setCurSideDrag(next)
-    handleEditor(newData)
     const discard = forwardEditor.pop()
-    discard && backEditor.push(discard)
+    backEditor.push(discard)
+    const newData = editor.map(v => v.key === discard?.key ? discard : v)
+    handleEditor((!editor.length) ? [discard] : newData)
+    setCurSelectedEl(discard)
     success('已前进一次操作')
   }
   const handleSaveStore = () => toSaveStore(editor)
   const topOperations = {
-    editor, setEditor, curSideDrag, setCurSideDrag, canvasWidth, setCanvasWidth,
+    editor, setEditor, freshEl, setFreshEl, canvasWidth, setCanvasWidth, curSelectedEl, setCurSelectedEl,
     handleBackEditor, handleForwardEditor, handleSaveStore, handleClearStore, handleReadme,
   }
   return (

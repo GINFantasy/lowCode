@@ -6,8 +6,8 @@ import context from '../../../Context'
 const { Option } = Select
 
 const Property = () => {
-    const { setEditor, editor, curSideDrag, setCurSideDrag } = useContext(context)
-    const { key, options, originStyle } = curSideDrag
+    const { setEditor, editor, curSelectedEl, setCurSelectedEl } = useContext(context)
+    const { key, options, originStyle } = curSelectedEl
     const originStyleKey = Object.keys(options.originStyle)
     const selectChange = (value, prop) => {
         const next = v => ({
@@ -19,7 +19,7 @@ const Property = () => {
         })
         const newEditor = editor.map(v => v.key === key ? next(v) : v)
         setEditor(newEditor)
-        setCurSideDrag(next(curSideDrag))
+        setCurSelectedEl(next(curSelectedEl))
     }
     return <>
         {

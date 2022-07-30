@@ -10,6 +10,7 @@ import './index.css'
 
 const { Title } = Typography
 const screen = { pc: '100%', ipad: '768px', iphone: '375px' }
+const TooltipTemp = props => <Tooltip placement="bottom" {...props}></Tooltip>
 
 const Tab = () => {
     const [curScreen, setCurScreen] = useState(screen.pc)
@@ -30,19 +31,19 @@ const Tab = () => {
             <ul className="device"
             >
                 <li className="high" onClick={change('pc')}>
-                    <Tooltip placement="bottom" title="pc">
+                    <TooltipTemp title="pc">
                         <DesktopOutlined />
-                    </Tooltip>
+                    </TooltipTemp>
                 </li>
                 <li className="high ipad" onClick={change('ipad')}>
-                    <Tooltip placement="bottom" title="ipad">
+                    <TooltipTemp title="ipad">
                         <MobileOutlined />
-                    </Tooltip>
+                    </TooltipTemp>
                 </li>
                 <li className="high" onClick={change('iphone')}>
-                    <Tooltip placement="bottom" title="iphone">
+                    <TooltipTemp title="iphone">
                         <MobileOutlined />
-                    </Tooltip>
+                    </TooltipTemp>
                 </li>
                 <li>
                     <Tag className="cur-screen">{curScreen}</Tag>
