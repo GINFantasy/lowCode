@@ -54,9 +54,9 @@ const App = () => {
     }
     forwardEditor.push(backEditor.pop())
     const discard = backEditor[backEditor.length - 1]
-    const newData = editor.map(v => v.key === discard?.key ? discard : v)
+    const newData = backEditor.filter(v => v.key !== discard?.key)
     setCurSelectedEl((!discard) ? false : discard)
-    handleEditor((!discard) ? [] : newData)
+    handleEditor((!discard) ? [] : [...newData, discard])
     success('已后退一次操作')
   }
   // 前进
@@ -67,8 +67,8 @@ const App = () => {
     }
     const discard = forwardEditor.pop()
     backEditor.push(discard)
-    const newData = editor.map(v => v.key === discard?.key ? discard : v)
-    handleEditor((!editor.length) ? [discard] : newData)
+    const newData = forwardEditor.filter(v => v.key !== discard?.key)
+    handleEditor((!editor.length) ? [discard] : [...newData, discard])
     setCurSelectedEl(discard)
     success('已前进一次操作')
   }
