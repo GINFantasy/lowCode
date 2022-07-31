@@ -34,7 +34,6 @@
   border-radius: 5px;
   position: relative;
   border: 1px solid #ededed;
-  background-color: #edeff3;
   transition: 0.4s;
 }
 .component-lib .el-comp::after {

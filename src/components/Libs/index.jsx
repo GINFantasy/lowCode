@@ -6,14 +6,7 @@ import {
     DatePicker,
     Pagination,
     Avatar,
-    Badge,
-    Calendar,
     Empty,
-    Image,
-    Popover,
-    Progress,
-    Result,
-    Spin,
 } from 'antd'
 
 import { defaultStyleConfig, colors } from './defaultConfig'
@@ -249,154 +242,11 @@ const definedProps = {
                 moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('头像')) })
             }),
         },
-        Badge: {
-            el: processOriginComp(Badge, '徽标'),
-            options: options('徽标组件', {
-                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('徽标')) })
-            }, {
-                originStyle: {
-                    color: {
-                        alias: '圆点颜色',
-                        values: {
-                            color: colors,
-                        }
-                    },
-                    dot: {
-                        alias: '不展示数字，只有一个圆点',
-                        values: {
-                            dot: ['false', 'true'],
-                        }
-                    },
-                    showZero: {
-                        alias: '当数值为 0 时，是否展示 Badge',
-                        values: {
-                            showZero: ['false', 'true'],
-                        }
-                    },
-                    status: {
-                        alias: '设置 Badge 为状态点',
-                        values: {
-                            status: ['default', 'success', 'processing', 'error', 'warning'],
-                        }
-                    },
-                }
-            }),
-        },
-        Calendar: {
-            el: processOriginComp(Calendar, '日历'),
-            options: options('日历组件', {
-                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('日历')) })
-            }),
-        },
         Empty: {
             el: processOriginComp(Empty, '空状态'),
             options: options('空状态组件', {
                 moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('空状态')) })
             })
-        },
-        Image: {
-            el: processOriginComp(Image, '图片'),
-            options: options('图片组件', {
-                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('图片')) })
-            }, {
-                originStyle: {
-                    preview: {
-                        alias: '预览参数',
-                        values: {
-                            preview: ['false', 'true'],
-                        }
-                    },
-                }
-            }),
-        },
-        Popover: {
-            el: processOriginComp(Popover, '气泡卡片'),
-            options: options('气泡卡片组件', {
-                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('气泡卡片')) })
-            })
-        },
-    },
-    feedback: {
-        Progress: {
-            el: processOriginComp(Progress, '进度条'),
-            options: options('进度条组件', {
-                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('进度条')) })
-            }, {
-                originStyle: {
-                    showInfo: {
-                        alias: '是否显示进度数值或状态图标',
-                        values: {
-                            showInfo: ['false', 'true'],
-                        }
-                    },
-                    status: {
-                        alias: '状态',
-                        values: {
-                            status: ['success', 'exception', 'normal', 'active'],
-                        }
-                    },
-                    stroke: {
-                        alias: '进度条色彩',
-                        values: {
-                            stroke: colors,
-                        }
-                    },
-                    strokeLinecap: {
-                        alias: '进度条样式',
-                        values: {
-                            strokeLinecap: ['round', 'butt', 'square'],
-                        }
-                    },
-                    trailColor: {
-                        alias: '未完成的分段的颜色',
-                        values: {
-                            trailColor: colors,
-                        }
-                    },
-                    type: {
-                        alias: '类型',
-                        values: {
-                            type: ['line', 'circle', 'dashboard'],
-                        }
-                    },
-                }
-            }),
-        },
-        Result: {
-            el: processOriginComp(Result, '结果'),
-            options: options('结果组件', {
-                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('结果')) })
-            }, {
-                originStyle: {
-                    status: {
-                        alias: '状态',
-                        values: {
-                            status: ['info', 'success', 'error', 'warning', '404', '403', '500'],
-                        }
-                    },
-                }
-            }),
-        },
-        Spin: {
-            el: processOriginComp(Spin, '加载'),
-            options: options('加载组件', {
-                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('加载')) })
-            }, {
-                originStyle: {
-                    size: {
-                        alias: '组件大小',
-                        values: {
-                            size: ['default', 'large', 'small'],
-                        }
-                    },
-                    spinning: {
-                        alias: '是否为加载中',
-                        values: {
-                            spinning: ['true', 'false'],
-                        }
-                    },
-                }
-            }),
         },
     },
     icons: processIcons()
@@ -407,7 +257,6 @@ const libs = [
     ['导航', definedProps.navigation],
     ['数据录入', definedProps.dataEntry],
     ['数据展示', definedProps.dataShow],
-    ['反馈', definedProps.feedback],
     ['图标', definedProps.icons],
 ]
 
