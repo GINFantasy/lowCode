@@ -5,21 +5,30 @@ import context from '../../../Context'
 
 const { Option } = Select
 
+// 布尔字符串转布尔值
+const turnBoolStringToBoolean = (str)=>{
+    if(str === 'true' || str === 'false'){
+        return str === 'true';
+    }else{
+        return str;
+    }
+}
+
 const Property = () => {
     const { setEditor, editor, curSelectedEl, setCurSelectedEl } = useContext(context)
     const { key, options, originStyle } = curSelectedEl
     const originStyleKey = Object.keys(options.originStyle)
     const selectChange = (value, prop) => {
-        const next = v => ({
+        const next = (v,isBool) => ({
             ...v,
             originStyle: {
                 ...v.originStyle,
-                [prop]: value,
+                [prop]: isBool? turnBoolStringToBoolean(value) : value,
             }
         })
-        const newEditor = editor.map(v => v.key === key ? next(v) : v)
+        const newEditor = editor.map(v => v.key === key ? next(v,true) : v)
         setEditor(newEditor)
-        setCurSelectedEl(next(curSelectedEl))
+        setCurSelectedEl(next(curSelectedEl,false))
     }
     return <>
         {
@@ -43,7 +52,10 @@ const Property = () => {
                                         <Select className="input"
                                             size="middle"
                                             key={originStyle[v] || values[valuesKey[i]]}
-                                            defaultValue={originStyle[v] || values[valuesKey[i]]}
+                                            defaultValue={()=>{
+                                                console.log(originStyle[v] ,values[valuesKey[i]]);
+                                                return originStyle[v] || values[valuesKey[i]]
+                                            }}
                                             onChange={e => selectChange(values[v][e], v)}
                                         >
                                             {
