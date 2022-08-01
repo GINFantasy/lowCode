@@ -15,7 +15,8 @@ const Center = () => {
     const { flag, key, originStyle } = freshEl
     const handleMouseDown = e => {
         const path = e.nativeEvent.path
-        const el = path.find(v => v.getAttribute('data-key'))
+        const el = path.find(v => v.getAttribute && v.getAttribute('data-key'))
+        if (!el) return
         const key = el.getAttribute('data-key')
         setFreshEl(editor.find(v => v.key === Number(key)))
     }
