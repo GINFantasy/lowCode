@@ -15,12 +15,14 @@ const Center = () => {
     const { flag, key, originStyle } = freshEl
     const handleMouseDown = e => {
         const path = e.nativeEvent.path
-        const el = path.find(v => v.getAttribute('data-key'))
-        const key = el.getAttribute('data-key')
-        setFreshEl(editor.find(v => v.key === Number(key)))
+        const el = path.find(v => v.getAttribute && v.getAttribute('data-key'))
+        // el可能为undefined
+        if(el){
+            const key = el.getAttribute('data-key')
+            setFreshEl(editor.find(v => v.key === Number(key)))
+        }   
     }
     const handleMouseMove = e => {
-        console.log('handleMouseMove')
         if (!flag) return
         const top = e.nativeEvent.offsetY
         const left = e.nativeEvent.offsetX
@@ -46,7 +48,6 @@ const Center = () => {
         setEditor(arrs)
     }
     const handleMouseUp = e => {
-        console.log('handleMouseUp')
         if (!flag) return
         e.preventDefault()
         e.stopPropagation()
@@ -67,7 +68,6 @@ const Center = () => {
         e.preventDefault()
         e.stopPropagation()
         setSelected(false)
-        console.log('handleOnclick')
     }
     console.log('center', editor)
     return (
