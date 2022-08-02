@@ -1,3 +1,19 @@
+* {
+    &::-webkit-scrollbar{
+        width: 6px;
+        height: 6px;
+        background-color:#f2f2f2;
+        transition: .2s all ease-out;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: var(--antd-wave-shadow-color);
+    }
+    &::-webkit-scrollbar-track-piece {
+        background-color: white;
+        padding: 0 10px;
+    }
+}
 .center {
     height: 100%;
     margin: 0 3px;

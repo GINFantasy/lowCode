@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Divider, Collapse } from 'antd'
 
 import libs from '../../Libs'
@@ -9,8 +9,11 @@ import './index.css'
 
 const { Panel } = Collapse
 
-const ComponentLib = ({ handleContent }) => {
+let panelKeyCache = []
+
+const ComponentLib = React.memo(({ handleContent }) => {
     const { editor, setFreshEl } = useContext(context)
+    const [panelKey,setPanelKey] = useState(panelKeyCache);
     const [move, setMove] = useState(false)
     const handleMouseDown = () => setMove(true)
     const handleMouseMove = (comp, v, C) => {
@@ -33,10 +36,19 @@ const ComponentLib = ({ handleContent }) => {
         setMove(false)
         handleContent('lib')
     }
+    const savePanelStatus = (keys)=>{
+        setPanelKey(keys.map(v=>parseInt(v)))
+    }
+    
+    useEffect(()=>{
+        // 保存上一次关闭时展开的key，用于下一次初始化
+        panelKeyCache = panelKey
+    },[panelKey])
+
     return (
         <>
             <Divider orientation="left">组件库</Divider>
-            <Collapse className="one-set" ghost={true} bordered={false}>
+            <Collapse className="one-set" ghost={true} bordered={false} defaultActiveKey={panelKey} onChange={(keys)=>savePanelStatus(keys)}>
                 {
                     libs.map((v, classifyIndex) => (
                         <Panel header={v[0]} key={classifyIndex}>
@@ -60,6 +72,6 @@ const ComponentLib = ({ handleContent }) => {
             </Collapse>
         </>
     )
-}
+})
 
 export default ComponentLib

@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
-import { Typography, Segmented, Button } from 'antd'
-
+import { Typography, Segmented,Popconfirm } from 'antd'
+import { DeleteOutlined } from '@ant-design/icons'
 import Property from './Property'
 import Style from './Style'
 import EventListener from './EventListener'
@@ -28,7 +28,20 @@ const RightSide = () => {
                 !flag ? <NoneProp /> : (
                     <>
                         <div className="classify">
-                            <Title level={4}>{name}</Title>
+                            <header className='classify-header'>
+                                <Title level={4}>{name}</Title>
+                                <Popconfirm
+                                    placement="rightBottom"
+                                    showCancel={false}
+                                    okText="Yes"
+                                    cancelText="No"
+                                    title={'您确定要删除该组件吗？'}
+                                    onConfirm={handleDel}
+                                >
+                                    <DeleteOutlined className='del-comp' title='删除组件'/>
+                                </Popconfirm>
+                                
+                            </header>
                             <Segmented block
                                 options={['属性', '样式', '事件']}
                                 onChange={e => setCurSegmented(e)}
@@ -37,11 +50,6 @@ const RightSide = () => {
                                 {render(belong[curSegmented])}
                             </div>
                         </div>
-                        <Button
-                            danger
-                            className="del-comp"
-                            onClick={handleDel}
-                        >删除</Button>
                     </>
                 )
             }

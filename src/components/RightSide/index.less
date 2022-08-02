@@ -16,25 +16,54 @@
 
     .classify {
         height: 90%;
-
+        .classify-header{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            height: 40px;
+            margin-bottom: 10px;
+            h4{
+                margin-bottom: 0!important;
+            }
+        }
+        .del-comp {
+            width: 30px;
+            height: 30px;
+            align-self: center;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            svg{
+                width: 70%;
+                height: 70%;
+                transition: .2s all ease-out;
+                &:hover{
+                    color: #f81d22;
+                }
+            }
+        }
         .one-set {
             height: 90%;
             margin-top: 20px;
-            padding-top: 20px;
             border-top: 1px solid #999;
             overflow-y: auto;
         }
-
+        .classify-props:not(.code-editor){
+            padding-right: 10px;
+        }
         .classify-props {
             margin-bottom: 20px;
-
+            
             .prop-divider {
                 color: rgb(0, 128, 0);
                 font-weight: 700;
                 background-color: rgb(239, 241, 244);
                 border-radius: 3px;
             }
-
+            
             .props-module {
 
                 .props-single {
@@ -58,12 +87,5 @@
                 }
             }
         }
-    }
-
-    .del-comp {
-        width: 80%;
-        align-self: center;
-        margin-bottom: 15px;
-        border-radius: 5px;
     }
 }

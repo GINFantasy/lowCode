@@ -53,7 +53,6 @@ const Property = () => {
                                             size="middle"
                                             key={originStyle[v] || values[valuesKey[i]]}
                                             defaultValue={()=>{
-                                                console.log(originStyle[v] ,values[valuesKey[i]]);
                                                 return originStyle[v] || values[valuesKey[i]]
                                             }}
                                             onChange={e => selectChange(values[v][e], v)}

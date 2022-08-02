@@ -3,7 +3,6 @@ import { Tooltip, Popconfirm } from 'antd'
 import {
     BuildOutlined,
     ExclamationCircleOutlined,
-    BugOutlined,
     ArrowLeftOutlined,
     ArrowRightOutlined,
     DownloadOutlined,
@@ -14,13 +13,11 @@ import {
 
 import context from '../../Context'
 import ComponentLib from './ComponentLib'
-import ComponentCode from './ComponentCode'
 
 import './index.css'
 
 const moreContent = [
-    { lib: ComponentLib },
-    { code: ComponentCode },
+    { lib: ComponentLib }
 ]
 const render = (Comp, f) => <Comp showComp={!!Comp} handleContent={f} />
 const TooltipTemp = props => <Tooltip placement="right" {...props}></Tooltip>
@@ -56,14 +53,9 @@ const LeftSide = () => {
                         <BuildOutlined />
                     </li>
                 </TooltipTemp>
-                <TooltipTemp title="代码">
-                    <li onClick={() => handleContent('code')}>
-                        <BugOutlined />
-                    </li>
-                </TooltipTemp>
             </ul>
             <ul className="other-operations">
-                <li>
+                <li title='回退'>
                     <PopconfirmTemp
                         title={'您确定要后退一次操作吗？'}
                         onConfirm={handleBackEditor}
@@ -71,7 +63,7 @@ const LeftSide = () => {
                         <ArrowLeftOutlined />
                     </PopconfirmTemp>
                 </li>
-                <li>
+                <li title='前进'>
                     <PopconfirmTemp
                         title={'您确定要前进一次操作吗？'}
                         onConfirm={handleForwardEditor}
@@ -79,7 +71,7 @@ const LeftSide = () => {
                         <ArrowRightOutlined />
                     </PopconfirmTemp>
                 </li>
-                <li>
+                <li title='保存'>
                     <PopconfirmTemp
                         title={'是否将现有的设计布局及样式保存至本地？'}
                         onConfirm={handleSaveStore}
@@ -89,7 +81,7 @@ const LeftSide = () => {
                         <DownloadOutlined />
                     </PopconfirmTemp>
                 </li>
-                <li>
+                <li title='清空'>
                     <PopconfirmTemp
                         title={'是否清空本地所保存的内容？'}
                         onConfirm={handleClearStore}
@@ -99,7 +91,7 @@ const LeftSide = () => {
                         <ClearOutlined />
                     </PopconfirmTemp>
                 </li>
-                <li>
+                <li title='帮助'>
                     <PopconfirmTemp
                         title={'点击确定查看使用说明'}
                         onConfirm={handleReadme}

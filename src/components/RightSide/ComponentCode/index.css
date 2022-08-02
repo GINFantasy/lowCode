@@ -1,0 +1,22 @@
+.code-editor {
+  height: calc(100% - 54px);
+}
+.code-text {
+  width: 100%;
+  height: calc(100% - 64px);
+  padding: 10px 0;
+}
+.code-text .text {
+  height: 88%;
+  resize: none;
+  border: 1px solid #f5f5f5;
+}
+.code-text .text:active {
+  border-color: #008000;
+}
+.code-text .text:hover {
+  border-color: #008000;
+}
+.code-text .text:focus {
+  border-color: #008000;
+}
