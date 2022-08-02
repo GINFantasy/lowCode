@@ -3,7 +3,6 @@ import { Tooltip, Popconfirm } from 'antd'
 import {
     BuildOutlined,
     ExclamationCircleOutlined,
-    BugOutlined,
     ArrowLeftOutlined,
     ArrowRightOutlined,
     DownloadOutlined,
@@ -14,13 +13,11 @@ import {
 
 import context from '../../Context'
 import ComponentLib from './ComponentLib'
-import ComponentCode from './ComponentCode'
 
 import './index.css'
 
 const moreContent = [
-    { lib: ComponentLib },
-    { code: ComponentCode },
+    { lib: ComponentLib }
 ]
 const render = (Comp, f) => <Comp showComp={!!Comp} handleContent={f} />
 const TooltipTemp = props => <Tooltip placement="right" {...props}></Tooltip>
@@ -54,11 +51,6 @@ const LeftSide = () => {
                 <TooltipTemp title="组件">
                     <li onClick={() => handleContent('lib')}>
                         <BuildOutlined />
-                    </li>
-                </TooltipTemp>
-                <TooltipTemp title="代码">
-                    <li onClick={() => handleContent('code')}>
-                        <BugOutlined />
                     </li>
                 </TooltipTemp>
             </ul>

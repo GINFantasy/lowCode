@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { Divider, Select } from 'antd'
+import ComponentCode from '../ComponentCode/index'
 
 import context from '../../../Context'
 
@@ -17,7 +18,7 @@ const EventListener = () => {
         setEditor(newEditor)
         setCurSelectedEl(next(curSelectedEl))
     }
-    return <div className="classify-props">
+    return <div className="classify-props code-editor">
         <Divider className="prop-divider" orientation='left' plain>添加事件</Divider>
         <div className="props-module">
             <Select
@@ -29,6 +30,7 @@ const EventListener = () => {
                 {options.events.map((v, i) => <Option key={i}>{v}</Option>)}
             </Select>
         </div>
+        <ComponentCode></ComponentCode>
     </div>
 }
 
