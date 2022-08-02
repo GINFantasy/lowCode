@@ -16,11 +16,9 @@ const Center = () => {
     const handleMouseDown = e => {
         const path = e.nativeEvent.path
         const el = path.find(v => v.getAttribute && v.getAttribute('data-key'))
-        // el可能为undefined
-        if(el){
-            const key = el.getAttribute('data-key')
-            setFreshEl(editor.find(v => v.key === Number(key)))
-        }   
+        if (!el) return
+        const key = el.getAttribute('data-key')
+        setFreshEl(editor.find(v => v.key === Number(key)))
     }
     const handleMouseMove = e => {
         if (!flag) return
