@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { Divider, Select, Empty } from 'antd'
+import { Divider, Select, Empty,Input } from 'antd'
 
 import context from '../../../Context'
 
@@ -14,18 +14,41 @@ const turnBoolStringToBoolean = (str)=>{
     }
 }
 
+const turnBooleanToBoolString = (str)=>{
+    if(str === true){
+        return 'true'
+    }else if(str === false){
+        return 'false'
+    }else{
+        return str
+    }
+}
+
 const Property = () => {
     const { setEditor, editor, curSelectedEl, setCurSelectedEl } = useContext(context)
     const { key, options, originStyle } = curSelectedEl
     const originStyleKey = Object.keys(options.originStyle)
+    const handleChangeText = (e, prop) => {
+        const { value } = e.target
+        const next = v => ({
+            ...v,
+            originStyle: {
+                ...v.originStyle,
+                [prop]: value,
+            }
+        })
+        const newEditor = editor.map(v => v.key === key ? next(v) : v)
+        setEditor(newEditor)
+        setCurSelectedEl(next(curSelectedEl))
+    }
     const selectChange = (value, prop) => {
         const next = (v,isBool) => ({
             ...v,
             originStyle: {
                 ...v.originStyle,
-                [prop]: isBool? turnBoolStringToBoolean(value) : value,
+                [prop]: isBool? turnBoolStringToBoolean(value) : value
             }
-        })
+        })  
         const newEditor = editor.map(v => v.key === key ? next(v,true) : v)
         setEditor(newEditor)
         setCurSelectedEl(next(curSelectedEl,false))
@@ -39,7 +62,7 @@ const Property = () => {
         }
         {
             originStyleKey.map((v, i) => {
-                const { alias, values } = options.originStyle[v]
+                const { alias, values,type } = options.originStyle[v]
                 const valuesKey = Object.keys(values)
                 return (
                     <div className="classify-props" key={i}>
@@ -49,20 +72,29 @@ const Property = () => {
                                 valuesKey.map((v, i) => (
                                     <div className="props-single" key={i}>
                                         <span className="props-title">{valuesKey[i]}:</span>
-                                        <Select className="input"
-                                            size="middle"
-                                            key={originStyle[v] || values[valuesKey[i]]}
-                                            defaultValue={()=>{
-                                                return originStyle[v] || values[valuesKey[i]]
-                                            }}
-                                            onChange={e => selectChange(values[v][e], v)}
-                                        >
-                                            {
-                                                values[valuesKey[i]].map((v2, i2) => {
-                                                    return <Option key={i2}>{v2}</Option>
-                                                })
-                                            }
-                                        </Select>
+                                        {
+                                            type === 'input' 
+                                            ?<Input
+                                                key={v+i}
+                                                className="input"
+                                                value={originStyle[v]}
+                                                onChange={e => handleChangeText(e, v)}
+                                            ></Input>
+                                            :<Select className="input"
+                                                size="middle"
+                                                key={originStyle[v] || values[valuesKey[i]]}
+                                                defaultValue={()=>{
+                                                    return turnBooleanToBoolString(originStyle[v]) || values[valuesKey[i]]
+                                                }}
+                                                onChange={e => selectChange(values[v][e], v)}
+                                            >
+                                                {
+                                                    values[valuesKey[i]].map((v2, i2) => {
+                                                        return <Option key={i2}>{v2}</Option>
+                                                    })
+                                                }
+                                            </Select>
+                                        }
                                     </div>
                                 ))
                             }

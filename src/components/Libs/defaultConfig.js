@@ -1,5 +1,7 @@
 // 默认的配置、颜色、图标等
 const colors = ['', '#000000', '#003865', '#EF5B0C', '#D4F6CC', '#3CCF4E', '#1A4D2E', '#FF9F29', '#FAF3E3', '#753188', '#01937C']
+// 标签颜色
+const tagColors = ['','magenta','red','volcano','orange','gold','lime','green','cyan','blue','geekblue','purple',]
 
 const defaultOriginCssStyle = {
     marginTop: '',
@@ -60,6 +62,7 @@ const defaultStyleConfig = {
 
 export {
     colors,
+    tagColors,
     defaultOriginCssStyle,
     defaultStyleConfig,
 }
