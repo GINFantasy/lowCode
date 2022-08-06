@@ -7,9 +7,10 @@ import {
     Pagination,
     Avatar,
     Empty,
+    Image
 } from 'antd'
 
-import { defaultStyleConfig, colors } from './defaultConfig'
+import { defaultStyleConfig ,tagColors } from './defaultConfig'
 import defaultIcons from './defaultIcons'
 
 const { Title } = Typography
@@ -26,8 +27,8 @@ const processIcons = () => {
     })
     return icons
 }
-const processOriginComp = (Comp, text = '') => {
-    return props => <Comp {...props} >{props?.children ? props?.children : text}</Comp>
+const processOriginComp = (Comp, text = '', other) => {
+    return props => <Comp {...other} {...props} >{props?.children ? props?.children : text}</Comp>
 }
 const options = (name, more, origin, e) => {
     const moreProps = (more && { ...more }) || { ...onMorePropsConfig() }
@@ -44,6 +45,13 @@ const onMorePropsConfig = (v = {}) => ({ ...defaultStyleConfig, ...v })
 const defaultCompName = alias => ({ alias, inValues: { text: ['children'] } })
 const inMorePropsConfig = (v = {}) => ({ values: {}, inValues: {}, ...v })
 const backOriginStyle = (v = {}) => ({ ...v })
+
+// 图片初始配置
+const imageOptions = {
+    src:'https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c62059dc7d9e4f4aa68a848bd1aa6739~tplv-k3u1fbpfcp-watermark.image?',
+    width:100,
+    height:100
+}
 
 const definedProps = {
     basisEl: {
@@ -69,6 +77,19 @@ const definedProps = {
                         alias: '形状',
                         values: {
                             shape: ['default', 'circle', 'round'],
+                        }
+                    },
+                    href: {
+                        alias: '跳转链接',
+                        values: {
+                            href: '',
+                        },
+                        type:'input'
+                    },
+                    target: {
+                        alias: '跳转选项',
+                        values: {
+                            target: ['_self','_blank','_parent','_top','framename']
                         }
                     },
                 })
@@ -230,7 +251,7 @@ const definedProps = {
                     color: {
                         alias: '标签色',
                         values: {
-                            color: colors,
+                            color: tagColors,
                         }
                     }
                 }
@@ -240,7 +261,79 @@ const definedProps = {
             el: processOriginComp(Avatar, '头像'),
             options: options('头像组件', {
                 moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('头像')) })
-            }),
+            }, {
+                originStyle: {
+                    shape: {
+                        alias: '形状',
+                        values: {
+                            shape: ['circle', 'square'],
+                        }
+                    },
+                    size: {
+                        alias: '大小',
+                        values: {
+                            size: ['default', 'large','small'],
+                        }
+                    },
+                    src: {
+                        alias: '头像地址',
+                        values: {
+                            src: '',
+                        },
+                        type:'input'  // 类型为输入框
+                    },
+                    alt: {
+                        alias: '头像描述',
+                        values: {
+                            alt: '',
+                        },
+                        type:'input'
+                    },
+                }
+            },['onError']),
+        },
+        Image: {
+            el: processOriginComp(Image, '图片',imageOptions),
+            options: options('图片组件', {
+                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('图片')) })
+            }, {
+                originStyle: {
+                    preview: {
+                        alias: '预览参数',
+                        values: {
+                            preview: ['false', 'true'],
+                        }
+                    },
+                    src: {
+                        alias: '图片地址',
+                        values: {
+                            src: 'https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c62059dc7d9e4f4aa68a848bd1aa6739~tplv-k3u1fbpfcp-watermark.image?',
+                        },
+                        type:'input'
+                    },
+                    alt: {
+                        alias: '图片描述',
+                        values: {
+                            alt: '',
+                        },
+                        type:'input'
+                    },
+                    fallback: {
+                        alias: '容错地址',
+                        values: {
+                            fallback: '',
+                        },
+                        type:'input'
+                    },
+                    rootClassName: {
+                        alias: '自定义类名',
+                        values: {
+                            rootClassName: '',
+                        },
+                        type:'input'
+                    },
+                }
+            },['onError']),
         },
         Empty: {
             el: processOriginComp(Empty, '空状态'),
