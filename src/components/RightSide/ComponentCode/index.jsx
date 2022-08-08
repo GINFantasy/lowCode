@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { Input, Button, message } from 'antd'
 
 import context from '../../../Context'
@@ -8,25 +8,30 @@ import './index.css'
 
 const { TextArea } = Input
 
-const ComponentCode = () => {
+const ComponentCode = (props) => {
     const { editor, setEditor, curSelectedEl, setCurSelectedEl } = useContext(context)
-    const getPreCode = () => {
-        const preEvent = Object.keys(curSelectedEl.events)[0]
-        const defaultCode = curSelectedEl.events[preEvent]?.code
-        return defaultCode
+    // 保存当前所选的事件
+    const { event } = props;
+    const [code, setCode] = useState("// 例如 alert('hello Events')\n")
+    const getPreCode = (curSelectedEl,event) => {
+        return curSelectedEl.events[event]?.code;
     }
-    const [code, setCode] = useState((curSelectedEl && getPreCode()) || "// 例如 alert('hello Events')\n")
-    const handleEvents = () => {
-        const { key, events } = curSelectedEl
-        const eventName = Object.keys(events)[0]
+    // 更新代码内容
+    useEffect(()=>{
+        setCode(getPreCode(curSelectedEl,event) || "// 例如 alert('hello Events')\n")
+    },[curSelectedEl,event])
+    
+    const handleEvents = (event) => {
+        const { key } = curSelectedEl
         const next = v => ({
             ...v,
-            events: { [eventName]: { fn: toEvent(code), code } }
+            events: { ...v.events,[event]: { fn: toEvent(code), code } }
         })
         setEditor(editor.map(v => v.key === key ? next(v) : v))
         setCurSelectedEl(next(curSelectedEl))
         message.success('提交成功')
     }
+
     return (
         <>
             <div className="code-text">
@@ -45,7 +50,7 @@ const ComponentCode = () => {
                 block
                 disabled={!curSelectedEl.flag}
                 type="primary"
-                onClick={handleEvents}
+                onClick={()=>handleEvents(event)}
             >完成</Button>
         </>
     )

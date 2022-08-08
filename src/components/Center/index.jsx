@@ -67,6 +67,16 @@ const Center = () => {
         e.stopPropagation()
         setSelected(false)
     }
+    // 转换事件对象
+    const getEventList = (editor,events,key)=>{
+        if(!events) return {};
+        let eventList = {}
+        for(let n in events){
+            if(n === 'onClick') eventList[n] = (e)=>processEvents(editor,key,n,e,handleOnclick)
+            else eventList[n] = (e)=>processEvents(editor,key,n,e)
+        }
+        return eventList
+    }
     console.log('center', editor)
     return (
         <div className="center" >
@@ -83,17 +93,15 @@ const Center = () => {
                 />
                 {selected ? <div className="shield"></div> : null}
                 {
-                    editor.map((v, i) => (
-                        <Slot
-                            key={i}
-                            {...v.originStyle}
-                            style={{ ...v.position, ...v.style }}
-                            data-key={i}
-                            className="static"
-                            render={v.el}
-                            onClick={e => processEvents(editor, i, 'onClick', e, handleOnclick)}
-                        ></Slot>
-                    ))
+                    editor.map((v, i) =><Slot
+                        key={i}
+                        {...v.originStyle}
+                        events={getEventList(editor,v.events,i)}
+                        style={{ ...v.position, ...v.style}}
+                        data-key={i}
+                        className={`static ${v.originStyle.className || ''}`}
+                        render={v.el}
+                    ></Slot>)
                 }
             </div>
         </div>

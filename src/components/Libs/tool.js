@@ -1,4 +1,7 @@
-const Slot = props => <>{props.render({ ...props, render: null })}</>
+const Slot = props => {
+    const {events} = props
+    return <>{props.render({ ...props,...events,render: null })}</>
+}
 // 事件处理
 const processEvents = (editor, key, name, e = {}, fn = Function.prototype) => {
     const handle = editor.find(v => v.key === key)
