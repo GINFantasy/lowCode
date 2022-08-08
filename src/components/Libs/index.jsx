@@ -7,11 +7,13 @@ import {
     Pagination,
     Avatar,
     Empty,
+    Input,
     Image
 } from 'antd'
-
-import { defaultStyleConfig ,tagColors } from './defaultConfig'
+import Video from '../Video'
+import { colors, defaultStyleConfig ,tagColors } from './defaultConfig'
 import defaultIcons from './defaultIcons'
+import './index.css'
 
 const { Title } = Typography
 const processIcons = () => {
@@ -22,13 +24,54 @@ const processIcons = () => {
             el: processOriginComp(defaultIcons[v], v),
             options: options(`${v}图标`, {
                 moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName(v)) })
+            },{originStyle: {
+                    rotate: {
+                        alias: '旋转角度',
+                        values: {
+                            rotate:'',
+                        },
+                        type:'input'
+                    },
+                    className: {
+                        alias: '自定义类名',
+                        values: {
+                            className:'',
+                        },
+                        type:'input'
+                    },
+                    spin: {
+                        alias: '旋转动画',
+                        values: {
+                            spin:['false','true'],
+                        }
+                    },
+                    color: {
+                        alias: '双色图标的主要颜色',
+                        values: {
+                            color:colors,
+                        }
+                    }
+                }
             })
         }
     })
     return icons
 }
-const processOriginComp = (Comp, text = '', other) => {
-    return props => <Comp {...other} {...props} >{props?.children ? props?.children : text}</Comp>
+const processOriginComp = (Comp, text = '', options) => props => {
+    return <Comp {...props} {...options} >
+        {
+            text === '输入框'
+            ? null
+            :props?.children ? props?.children : text
+        }
+    </Comp>
+}
+// 包裹图片组件
+const processImageOriginComp = (Comp,options) => props => {
+    const {className,src,alt,width,height} = props;
+    return <div {...props} src={null} className={`lc-image-ct ${className}`}>
+        <Comp {...options} width={width} height={height} src={src} alt={alt} ></Comp>
+    </div>
 }
 const options = (name, more, origin, e) => {
     const moreProps = (more && { ...more }) || { ...onMorePropsConfig() }
@@ -48,7 +91,7 @@ const backOriginStyle = (v = {}) => ({ ...v })
 
 // 图片初始配置
 const imageOptions = {
-    src:'https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c62059dc7d9e4f4aa68a848bd1aa6739~tplv-k3u1fbpfcp-watermark.image?',
+    src:'https://raw.githubusercontent.com/GINFantasy/blog-img/main/img-image-20220807195459103.png',
     width:100,
     height:100
 }
@@ -65,6 +108,18 @@ const definedProps = {
                         alias: '类型',
                         values: {
                             type: ['default', 'primary', 'ghost', 'dashed', 'link', 'text'],
+                        }
+                    },
+                    danger: {
+                        alias: '危险按钮',
+                        values: {
+                            danger: ['false', 'true'],
+                        }
+                    },
+                    loading: {
+                        alias: '载入状态',
+                        values: {
+                            loading: ['false', 'true'],
                         }
                     },
                     size: {
@@ -94,6 +149,80 @@ const definedProps = {
                     },
                 })
             }, ['onClick', 'onMouseMove'])
+        },
+        Input: {
+            el: processOriginComp(Input, '输入框',{defaultValue:'输入框',width:100}),
+            options: options('输入框组件', {
+                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('输入框')) })
+            }, {
+                originStyle:{
+                    allowClear: {
+                        alias: '允许清除',
+                        values: {
+                            allowClear: ['false', 'true'],
+                        }
+                    },
+                    bordered: {
+                        alias: '是否有边框',
+                        values: {
+                            bordered: ['true', 'false'],
+                        }
+                    },
+                    defaultValue: {
+                        alias: '默认值',
+                        values: {
+                            defaultValue: '输入框',
+                        },
+                        type:'input'
+                    },
+                    id: {
+                        alias: 'id',
+                        values: {
+                            id: '',
+                        },
+                        type:'input'
+                    },
+                    maxLength: {
+                        alias: '最大长度',
+                        values: {
+                            maxLength: '',
+                        },
+                        type:'input'
+                    },
+                    showCount: {
+                        alias: '是否展示字数',
+                        values: {
+                            showCount: ['false', 'true'],
+                        }
+                    },
+                    size: {
+                        alias: '大小',
+                        values: {
+                            size: ['middle', 'large', 'small'],
+                        }
+                    },
+                    status: {
+                        alias: '校验状态',
+                        values: {
+                            status: ['', 'error', 'warning'],
+                        }
+                    },
+                    type: {
+                        alias: '类型',
+                        values: {
+                            type: '',
+                        },
+                        type:'input'
+                    },
+                    value: {
+                        alias: '内容',
+                        values: {
+                            value: '',
+                        },
+                        type:'input'
+                    },
+                }
+            }, ['onChange', 'onPressEnter'])
         },
         Title: {
             el: processOriginComp(Title, '标题'),
@@ -177,6 +306,19 @@ const definedProps = {
                             allowClear: ['true', 'false'],
                         }
                     },
+                    autoFocus: {
+                        alias: '自动获取焦点',
+                        values: {
+                            autoFocus: ['false', 'true'],
+                        }
+                    },
+                    className: {
+                        alias: '类名',
+                        values: {
+                            className: '',
+                        },
+                        type:'input'
+                    },
                     bordered: {
                         alias: '显示边框',
                         values: {
@@ -188,6 +330,13 @@ const definedProps = {
                         values: {
                             disabled: ['false', 'true'],
                         }
+                    },
+                    dropdownClassName: {
+                        alias: '弹出日历类名',
+                        values: {
+                            dropdownClassName: '',
+                        },
+                        type:'input'
                     },
                     inputReadOnly: {
                         alias: '只读',
@@ -212,6 +361,13 @@ const definedProps = {
                         values: {
                             picker: ['date', 'week', 'month', 'quarter', 'year'],
                         }
+                    },
+                    placeholder: {
+                        alias: '提示文字',
+                        values: {
+                            placeholder: '',
+                        },
+                        type:'input'
                     },
                     placement: {
                         alias: '选择框弹出的位置',
@@ -293,7 +449,7 @@ const definedProps = {
             },['onError']),
         },
         Image: {
-            el: processOriginComp(Image, '图片',imageOptions),
+            el: processOriginComp(processImageOriginComp(Image), '图片',imageOptions),
             options: options('图片组件', {
                 moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('图片')) })
             }, {
@@ -318,13 +474,6 @@ const definedProps = {
                         },
                         type:'input'
                     },
-                    fallback: {
-                        alias: '容错地址',
-                        values: {
-                            fallback: '',
-                        },
-                        type:'input'
-                    },
                     rootClassName: {
                         alias: '自定义类名',
                         values: {
@@ -332,6 +481,60 @@ const definedProps = {
                         },
                         type:'input'
                     },
+                }
+            },['onError']),
+        },
+        Video: {
+            el: processOriginComp(Video, '视频',{poster:'https://raw.githubusercontent.com/GINFantasy/blog-img/main/img-image-20220807195348225.png'}),
+            options: options('视频组件', {
+                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('视频')) })
+            }, {
+                originStyle: {
+                    src: {
+                        alias: '视频链接',
+                        values: {
+                            src: '',
+                        },
+                        type:'input'
+                    },
+                    poster: {
+                        alias: '默认图片',
+                        values: {
+                            poster: 'https://raw.githubusercontent.com/GINFantasy/blog-img/main/img-image-20220807195348225.png',
+                        },
+                        type:'input'
+                    },
+                    autoplay: {
+                        alias: '自动播放',
+                        values: {
+                            autoPlay: ['', 'autoplay'],
+                        }
+                    },
+                    controls: {
+                        alias: '控件',
+                        values: {
+                            controls: ['', 'controls'],
+                        }
+                    },
+                    muted: {
+                        alias: '静音',
+                        values: {
+                            muted: ['', 'muted'],
+                        }
+                    },
+                    preload: {
+                        alias: '预加载选项',
+                        values: {
+                            preload: ['none', 'auto','metadata'],
+                        }
+                    },
+                    loop: {
+                        alias: '循环',
+                        values: {
+                            loop: ['', 'loop'],
+                        }
+                    },
+                   
                 }
             },['onError']),
         },

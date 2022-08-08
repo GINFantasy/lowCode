@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { Divider, Select } from 'antd'
 import ComponentCode from '../ComponentCode/index'
 
@@ -9,11 +9,15 @@ const { Option } = Select
 const EventListener = () => {
     const { setEditor, editor, curSelectedEl, setCurSelectedEl } = useContext(context)
     const { key, options, events } = curSelectedEl
+    const [event,setEvent] = useState(options.events[0]);
     const selectChange = (_, { children }) => {
-        const next = v => ({
-            ...v,
-            events: { [children]: null }
-        })
+        setEvent(children);
+        const next = v => {
+            return {
+                ...v,
+                events: { ...v.events,[children]: v.events[children] }
+            }
+        }
         const newEditor = editor.map(v => v.key === key ? next(v) : v)
         setEditor(newEditor)
         setCurSelectedEl(next(curSelectedEl))
@@ -30,7 +34,7 @@ const EventListener = () => {
                 {options.events.map((v, i) => <Option key={i}>{v}</Option>)}
             </Select>
         </div>
-        <ComponentCode></ComponentCode>
+        <ComponentCode event={event}></ComponentCode>
     </div>
 }
 

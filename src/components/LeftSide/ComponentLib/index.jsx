@@ -54,16 +54,19 @@ const ComponentLib = React.memo(({ handleContent }) => {
                         <Panel header={v[0]} key={classifyIndex}>
                             <div className="libs-container">
                                 {
-                                    Object.keys(v[1]).map((C, oneIndex) => (
-                                        <div
-                                            className="el-comp"
-                                            key={oneIndex}
-                                            onMouseDown={handleMouseDown}
-                                            onMouseMove={(e) => handleMouseMove(v[1][C], v[0], C)}
-                                        >
-                                            <div>{v[1][C].el()}</div>
-                                        </div>
-                                    ))
+                                    Object.keys(v[1]).map((C, oneIndex) => {
+                                        return (
+                                            <div
+                                                className="el-comp"
+                                                title={v[1][C].options.name}
+                                                key={oneIndex}
+                                                onMouseDown={handleMouseDown}
+                                                onMouseMove={(e) => handleMouseMove(v[1][C], v[0], C)}
+                                            >
+                                                <div>{v[1][C].el()}</div>
+                                            </div>
+                                        )
+                                    })
                                 }
                             </div>
                         </Panel>

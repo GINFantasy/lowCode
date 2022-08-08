@@ -1,0 +1,3 @@
+.ant-input:not(textarea){
+    width: 100px;
+}
