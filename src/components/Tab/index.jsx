@@ -19,6 +19,10 @@ const Tab = () => {
     const { setCanvasWidth, editor } = useContext(context)
     const [exportEditor, setExportEditor] = useState(false)
     const handleExport = () => {
+        if (!editor.length) {
+            message.error('您不能够导出一个空页面')
+            return
+        }
         const args = ['http://localhost:9999/export', editor]
         const acc = data => {
             // data.result.data[0].msg = { flag, text, url }
