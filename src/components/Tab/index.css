@@ -32,25 +32,25 @@ body {
   align-items: center;
   background-color: #ffffff;
 }
-.tab .device {
-  list-style-type: none;
-  display: flex;
-}
-.tab .device li {
-  padding: 5px 10px;
-  border-radius: 5px;
-  margin-right: 20px;
-}
-.tab .device .high {
+.tab .high {
   background-color: #f2f2f2;
 }
-.tab .device .ipad {
+.tab .ipad {
   transform: scale(0.95) rotate(270deg);
 }
-.tab .device .cur-screen {
+.tab .cur-screen {
   border: none;
   border-radius: 5px;
   background-color: #f2f2f2;
+}
+.tab ul {
+  list-style-type: none;
+  display: flex;
+}
+.tab ul li {
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 20px;
 }
 .tab ul button {
   margin-right: 10px;
