@@ -17,7 +17,7 @@ const sFai = { flag: false, text: '导出失败' }
 const sWin = { flag: true, text: '导出成功' }
 
 const handleExport = (req, res) => {
-    const editor = req.body.editor
+    const { editor } = req.body
     const handle = async err => {
         if (err) return res.send(sFai)
         const flag = await go()
@@ -26,7 +26,9 @@ const handleExport = (req, res) => {
             func: compress,
             args: ['compress.zip']
         }]
-        const acc = ({ error, result }) => res.send(error ? sFai : { ...sWin, url: __dirname })
+        const acc = ({ error }) =>{
+            res.send(error ? sFai : sWin)
+        }
         combineAsyncError(queue, { acc })
     }
     fs.writeFile(url, text(editor), handle)

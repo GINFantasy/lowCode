@@ -12,7 +12,7 @@ import './index.css'
  */
 
 const Preview = props => {
-    const editor = (props && props.location.state) || store.getItem()
+    const editor = (props && props.location.state) || store.getItem('editor')
     return (
         <div className="preview">
             {

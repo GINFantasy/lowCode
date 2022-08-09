@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { message } from 'antd'
+import { message,Spin } from 'antd'
+import { nanoid } from 'nanoid'
 
 import context from './Context'
 import store from './Store'
@@ -14,8 +15,8 @@ const forwardEditor = []
 const defaultCurSideDrag = { flag: false, options: { moreProps: {}, originStyle: {} }, style: {}, originStyle: {}, events: [] }
 const { success, warning, error } = message
 
-const toSaveStore = editor => {
-  store.setItem(editor)
+const toSaveStore = (editor,id) => {
+  store.setItem(editor,id)
   success('保存成功')
 }
 const handleClearStore = () => {
@@ -31,8 +32,10 @@ const handleReadme = () => {
 
 const App = () => {
   // editor表示画布中的所有组件
-  const [editor, handleEditor] = useState(store.getItem())
+  const [editor, handleEditor] = useState(store.getItem('editor'))
   // freshEl代表要新生成的组件
+  const [contentSpinning,setContentSpinning] = useState(false);
+  const [editorId,setEditorId] = useState(store.getItem('id'));
   const [freshEl, setFreshEl] = useState({})
   const [canvasWidth, setCanvasWidth] = useState('100%')
   const [curSelectedEl, handleCurSelectedEl] = useState(defaultCurSideDrag)
@@ -40,6 +43,8 @@ const App = () => {
   // 拦截所有修改editor的操作，并追加至历史记录
   const setEditor = oneSet => {
     backEditor.push(oneSet[oneSet.length - 1])
+    // 更新id
+    setEditorId(nanoid());
     handleEditor(oneSet)
   }
   const setCurSelectedEl = oneSet => {
@@ -72,16 +77,17 @@ const App = () => {
     setCurSelectedEl(discard)
     success('已前进一次操作')
   }
-  const handleSaveStore = () => toSaveStore(editor)
+  const handleSaveStore = () => toSaveStore(editor,editorId)
   const topOperations = {
     editor, setEditor, freshEl, setFreshEl, canvasWidth, setCanvasWidth, curSelectedEl, setCurSelectedEl,
-    handleBackEditor, handleForwardEditor, handleSaveStore, handleClearStore, handleReadme,
+    handleBackEditor, handleForwardEditor, handleSaveStore, handleClearStore, handleReadme,contentSpinning,setContentSpinning,editorId,setEditorId
   }
   return (
     <section className="app">
       <Provider value={{ ...topOperations }}>
         <Tab />
         <div className="content">
+          <Spin tip='请耐心等待...' className={`content-spin${contentSpinning?' spinning':''}`} spinning={contentSpinning}/>
           <LeftSide />
           <Center />
           <RightSide />
