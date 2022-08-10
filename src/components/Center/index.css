@@ -62,7 +62,7 @@
   position: absolute;
   width: 100%;
   height: calc(100% - 52px);
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,6 +71,9 @@
 .content-spin.spinning {
   z-index: 2;
   cursor: not-allowed;
+}
+.content-spin .ant-spin-text {
+  user-select: none;
 }
 .content-spin .ant-spin-dot {
   font-size: 28px;

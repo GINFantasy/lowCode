@@ -62,7 +62,7 @@ const Center = () => {
         const position = { top: curPosition.top, left: curPosition.left }
         changePosition(position)
     }
-    const handleOnclick = e => {
+    const handleEvents = e => {
         e.preventDefault()
         e.stopPropagation()
         setSelected(false)
@@ -72,8 +72,7 @@ const Center = () => {
         if(!events) return {};
         let eventList = {}
         for(let n in events){
-            if(n === 'onClick') eventList[n] = (e)=>processEvents(editor,key,n,e,handleOnclick)
-            else eventList[n] = (e)=>processEvents(editor,key,n,e)
+            eventList[n] = (e)=>processEvents(editor,key,n,e,handleEvents)
         }
         return eventList
     }

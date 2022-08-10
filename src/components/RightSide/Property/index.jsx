@@ -77,7 +77,7 @@ const Property = () => {
                                             ?<Input
                                                 key={v+i}
                                                 className="input"
-                                                value={originStyle[v]}
+                                                defaultValue={values[valuesKey[i]]}
                                                 onChange={e => handleChangeText(e, v)}
                                             ></Input>
                                             :<Select className="input"

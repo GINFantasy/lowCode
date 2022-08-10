@@ -1,6 +1,6 @@
 const Slot = props => {
     const {events} = props
-    return <>{props.render({ ...props,...events,render: null })}</>
+    return <>{props.render({ ...props,events:undefined,...events,render: null })}</>
 }
 // 事件处理
 const processEvents = (editor, key, name, e = {}, fn = Function.prototype) => {

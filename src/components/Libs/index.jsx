@@ -217,7 +217,7 @@ const definedProps = {
                     value: {
                         alias: '内容',
                         values: {
-                            value: '',
+                            value: '输入框',
                         },
                         type:'input'
                     },
