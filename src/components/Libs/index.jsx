@@ -12,7 +12,7 @@ import {
 } from 'antd'
 import Video from './customComp/Video'
 import Div from './customComp/Div'
-import { colors, defaultStyleConfig ,tagColors } from './defaultConfig'
+import { defaultStyleConfig ,tagColors } from './defaultConfig'
 import defaultIcons from './defaultIcons'
 import './index.css'
 
