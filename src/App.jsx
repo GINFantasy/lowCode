@@ -45,7 +45,6 @@ const App = () => {
   // 拦截所有修改editor的操作，并追加至历史记录
   const setEditor = oneSet => {
     backEditor.push(oneSet[oneSet.length - 1])
-    console.log('settt',backEditor);
     // 更新id
     setEditorId(nanoid());
     handleEditor(oneSet)
@@ -60,7 +59,6 @@ const App = () => {
       error('暂时没有要后退的操作')
       return
     }
-    console.log(111,backEditor);
     forwardEditor.push(backEditor.pop())
     const discard = backEditor[backEditor.length - 1]
     const newData = editor.filter(v => v.key !== discard?.key)
