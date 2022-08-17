@@ -6,8 +6,8 @@
 html,
 body {
   width: 100%;
-  height: 100vh;
-  background-color: #d5d5d5;
+  height: 100%;
+  animation: bounce-body 1s forwards;
 }
 #root {
   width: 100%;
@@ -16,6 +16,7 @@ body {
 .app {
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 .content {
   height: calc(100% - 52px);
@@ -27,10 +28,22 @@ body {
   padding: 0 10px;
   margin-bottom: 3px;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
+  animation: bounce-tab 0.3s ease-out;
+}
+.tab ul {
+  margin-bottom: 0;
+}
+.tab .tab-title {
+  font-size: 28px;
+  line-height: 48px;
+  height: 48px;
+  font-weight: 600;
+  margin-bottom: 0;
+  color: #008000;
+  user-select: none;
 }
 .tab .high {
   background-color: #f2f2f2;
@@ -55,4 +68,22 @@ body {
 .tab ul button {
   margin-right: 10px;
   border-radius: 3px;
+}
+@keyframes bounce-body {
+  0% {
+    background-color: #ffffff;
+  }
+  100% {
+    background-color: #d5d5d5;
+  }
+}
+@keyframes bounce-tab {
+  0% {
+    opacity: 0;
+    transform: translateY(-48px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

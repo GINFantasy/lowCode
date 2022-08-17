@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { Typography, Tooltip, Tag, Button, message } from 'antd'
+import { Tooltip, Tag, Button, message } from 'antd'
 import { DesktopOutlined, MobileOutlined } from '@ant-design/icons'
 import combineAsyncError from 'combine-async-error'
 
@@ -9,8 +9,6 @@ import context from '../../Context'
 import req from '../../apis/req'
 
 import './index.css'
-
-const { Title } = Typography
 const screen = { pc: '100%', ipad: '768px', iphone: '375px' }
 const TooltipTemp = props => <Tooltip placement="bottom" {...props}></Tooltip>
 
@@ -66,7 +64,7 @@ const Tab = () => {
     }
     return (
         <div className="tab">
-            <Title>low-code</Title>
+            <p className='tab-title'>Low-Code</p>
             <ul className="device"
             >
                 <li className="high" onClick={change('pc')}>

@@ -19,10 +19,7 @@ const toSaveStore = (editor,id) => {
   store.setItem(editor,id)
   success('保存成功')
 }
-const handleClearStore = () => {
-  store.remove()
-  success('已清空')
-}
+
 const handleReadme = () => {
   warning('请F12自行查看GitHub仓库，内有详细说明文档')
   setTimeout(() => {
@@ -40,9 +37,15 @@ const App = () => {
   const [canvasWidth, setCanvasWidth] = useState('100%')
   const [curSelectedEl, handleCurSelectedEl] = useState(defaultCurSideDrag)
   const { Provider } = context
+  const handleClearStore = () => {
+    store.remove()
+    setEditor([])
+    success('已清空')
+  }
   // 拦截所有修改editor的操作，并追加至历史记录
   const setEditor = oneSet => {
     backEditor.push(oneSet[oneSet.length - 1])
+    console.log('settt',backEditor);
     // 更新id
     setEditorId(nanoid());
     handleEditor(oneSet)
@@ -57,9 +60,10 @@ const App = () => {
       error('暂时没有要后退的操作')
       return
     }
+    console.log(111,backEditor);
     forwardEditor.push(backEditor.pop())
     const discard = backEditor[backEditor.length - 1]
-    const newData = backEditor.filter(v => v.key !== discard?.key)
+    const newData = editor.filter(v => v.key !== discard?.key)
     setCurSelectedEl((!discard) ? false : discard)
     handleEditor((!discard) ? [] : [...newData, discard])
     success('已后退一次操作')
@@ -72,7 +76,7 @@ const App = () => {
     }
     const discard = forwardEditor.pop()
     backEditor.push(discard)
-    const newData = forwardEditor.filter(v => v.key !== discard?.key)
+    const newData = editor.filter(v => v.key !== discard?.key)
     handleEditor((!editor.length) ? [discard] : [...newData, discard])
     setCurSelectedEl(discard)
     success('已前进一次操作')

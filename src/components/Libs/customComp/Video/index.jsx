@@ -4,11 +4,8 @@
  * @Autor: GuluGuluu
  * @Date: 2022-08-07 18:23:55
  * @LastEditors: GuluGuluu
- * @LastEditTime: 2022-08-08 18:47:20
+ * @LastEditTime: 2022-08-17 17:00:44
  */
-
-
-import './index.css'
 function Video(props){
     const {className,style} = props;
     return <div {...props} src={null} style={style} className={`lc-vedio-ct ${className}`}>
