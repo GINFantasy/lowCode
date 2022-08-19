@@ -24,7 +24,7 @@ const download = (url) => new Promise((resolve,reject) => {
                 var a = document.createElement("a");
                 a.href = url;
                 // 指定下载文件的文件名
-                a.download = "compress.zip";
+                a.download = `HighDance-${new Date().toISOString()}`
                 a.click();
                 resolve();
             }else{

@@ -19,42 +19,43 @@
     margin: 0 3px;
     padding: 5px;
     flex-grow: 2;
-    position: relative;
 
     .canvas {
         height: 100%;
         overflow: auto;
         margin: 0 auto;
         border-radius: 3px;
-        background-color: rgb(239, 241, 244);
-        box-shadow: 0 0 13px 2px #00000005;
+        background-color: #f8f8f8;
+        box-shadow: 0 0 13px 2px #00000014;
         position: relative;
         transition: all 0.6s;
+        animation: bounce-canvas 0.8s linear;
 
         .shield {
             width: 100%;
-            height: 100%;
             position: absolute;
             top: 0;
             left: 0;
             z-index: 99998;
-            background-color: rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0.15);
         }
 
         .look-me {
-            width: 100px;
-            height: 20px;
+            height: 40px;
+            line-height: 40px;
             text-align: center;
-            line-height: 20px;
+            padding: 0 10px;
             position: absolute;
             top: 0;
             left: -101px;
             user-select: none;
             z-index: 99999;
             cursor: move;
+            font-weight: 700;
             border-radius: 5px;
             color: rgb(255, 255, 255);
-            background-color: rgb(144, 145, 147);
+            background-color: #18b98d;
+            box-shadow: 0 0 11px 0px #0000004d;
         }
 
     }
@@ -64,7 +65,6 @@
         transition: none;
         user-select: none;
     }
-
 }
 
 .content-spin{
@@ -87,5 +87,14 @@
             width: 12px;
             height: 12px;
         }
+    }
+} 
+@keyframes bounce-canvas {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
     }
 }

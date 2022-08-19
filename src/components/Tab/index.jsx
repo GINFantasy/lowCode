@@ -1,18 +1,17 @@
 import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { Typography, Tooltip, Tag, Button, message } from 'antd'
+import { Tooltip, Tag, Button, message } from 'antd'
 import { DesktopOutlined, MobileOutlined } from '@ant-design/icons'
 import combineAsyncError from 'combine-async-error'
 
 import store from '../../Store'
 import context from '../../Context'
 import req from '../../apis/req'
-
+import { antMsg,download } from '../Libs/tool'
 import './index.css'
-
-const { Title } = Typography
 const screen = { pc: '100%', ipad: '768px', iphone: '375px' }
 const TooltipTemp = props => <Tooltip placement="bottom" {...props}></Tooltip>
+let exportUrl = 'http://localhost:9999/zip/compress.zip';
 
 // 检查版本是否一致
 const compareFileVersion = (editorid)=>{
@@ -32,27 +31,31 @@ const Tab = () => {
         const common = compareFileVersion(editorId);
         // 保存当前版本
         store.setItem(editor,editorId);
-        const exportArgs = [req.DOMAIN + '/export',{editor,editorId}]
-        const downloadArgs = [req.DOMAIN + '/zip/compress.zip'];
-        const acc = res => {
-            const {error} = res;
+        const exportArgs = [req.DOMAIN + '/export',editor]
+        const acc = ({ error, result }) => {
             if(!error){
                 message.success('导出成功！');
+                const { url } = result[0].data.msg;
+                exportUrl = url;
+                download(url);
             }else{
                 message.error(error.msg);
                 setEditorId('');
             }
             setContentSpinning(false)
         }
-        // 若一致，则直接请求下载
-        if(common){
-            combineAsyncError([{func:req.download,args:downloadArgs}], { acc })
+        // 若一致且已经导出过，则直接下载
+        if(common && exportUrl){
+            download(exportUrl);
+            setContentSpinning(false)
         }
-        // 否则需要进行重新压缩
+        // 否则需要进行重新导出
         else{
-            combineAsyncError([{ func: req.post, args:exportArgs },{func:req.download,args:downloadArgs}], { acc })
+            antMsg.success('正在准备导出');
+            setTimeout(antMsg.warning, 4000, '这可能会需要几分钟，请耐心等待');
+            combineAsyncError([{ func: req.post, args:exportArgs }], { acc })
+            setContentSpinning(true)
         }
-        setContentSpinning(true)
     }
     const change = s => {
         return () => {
@@ -66,7 +69,7 @@ const Tab = () => {
     }
     return (
         <div className="tab">
-            <Title>low-code</Title>
+            <p className='tab-title'>Low-Code</p>
             <ul className="device"
             >
                 <li className="high" onClick={change('pc')}>

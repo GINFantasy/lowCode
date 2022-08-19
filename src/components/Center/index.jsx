@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext,useRef } from 'react'
 import { message } from 'antd'
 
 import context from '../../Context'
@@ -8,10 +8,12 @@ import LookMe from './LookMe'
 import './index.css'
 
 const Center = () => {
-    const { editor, freshEl, setEditor, setFreshEl, setCurSelectedEl, canvasWidth } = useContext(context)
+    const ctx = useContext(context)
+    const { editor, freshEl, setEditor, setFreshEl, setCurSelectedEl, canvasWidth } = ctx
     const [lastPosition, setLastPosition] = useState({ top: 0, left: 0 })
     const [handOver, setHandOver] = useState(null)
     const [selected, setSelected] = useState(false)
+    const canvasRef = useRef()
     const { flag, key, originStyle } = freshEl
     const handleMouseDown = e => {
         const path = e.nativeEvent.path
@@ -62,7 +64,7 @@ const Center = () => {
         const position = { top: curPosition.top, left: curPosition.left }
         changePosition(position)
     }
-    const handleOnclick = e => {
+    const handleEvents = e => {
         e.preventDefault()
         e.stopPropagation()
         setSelected(false)
@@ -72,8 +74,7 @@ const Center = () => {
         if(!events) return {};
         let eventList = {}
         for(let n in events){
-            if(n === 'onClick') eventList[n] = (e)=>processEvents(editor,key,n,e,handleOnclick)
-            else eventList[n] = (e)=>processEvents(editor,key,n,e)
+            eventList[n] = (e)=>processEvents(editor,key,n,e,handleEvents)
         }
         return eventList
     }
@@ -82,6 +83,7 @@ const Center = () => {
         <div className="center" >
             <div
                 className="canvas"
+                ref={canvasRef}
                 style={{ width: canvasWidth }}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
@@ -91,7 +93,17 @@ const Center = () => {
                     setHandOver={setHandOver}
                     text={originStyle?.children}
                 />
-                {selected ? <div className="shield"></div> : null}
+                 {
+                    selected ? (
+                        <div
+                            className="shield"
+                            style={{
+                                width: `${canvasRef.current.scrollWidth}px`,
+                                height: `${canvasRef.current.scrollHeight}px`
+                            }}
+                        ></div>
+                    ) : null
+                }
                 {
                     editor.map((v, i) =><Slot
                         key={i}

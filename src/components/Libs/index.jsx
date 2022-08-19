@@ -10,12 +10,13 @@ import {
     Input,
     Image
 } from 'antd'
-import Video from '../Video'
-import { colors, defaultStyleConfig ,tagColors } from './defaultConfig'
+import Video from './customComp/Video'
+import Div from './customComp/Div'
+import { defaultStyleConfig ,tagColors } from './defaultConfig'
 import defaultIcons from './defaultIcons'
 import './index.css'
 
-const { Title } = Typography
+const { Title,Text } = Typography
 const processIcons = () => {
     const icons = {}
     const defaultIconsKey = Object.keys(defaultIcons)
@@ -45,11 +46,12 @@ const processIcons = () => {
                             spin:['false','true'],
                         }
                     },
-                    color: {
-                        alias: '双色图标的主要颜色',
+                    twoToneColor: {
+                        alias: '双色图标主题色',
                         values: {
-                            color:colors,
-                        }
+                            twoToneColor:'',
+                        },
+                        type:'input'
                     }
                 }
             })
@@ -68,9 +70,9 @@ const processOriginComp = (Comp, text = '', options) => props => {
 }
 // 包裹图片组件
 const processImageOriginComp = (Comp,options) => props => {
-    const {className,src,alt,width,height} = props;
-    return <div {...props} src={null} className={`lc-image-ct ${className}`}>
-        <Comp {...options} width={width} height={height} src={src} alt={alt} ></Comp>
+    const {className,style} = props;
+    return <div style={style}  src={null} className={`lc-image-ct ${className}`}>
+        <Comp {...options} {...props} style={{}} ></Comp>
     </div>
 }
 const options = (name, more, origin, e) => {
@@ -98,6 +100,144 @@ const imageOptions = {
 
 const definedProps = {
     basisEl: {
+        Text:{
+            el: processOriginComp(Text, '文本'),
+            options: options('文本组件', {
+                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('文本')) })
+            }, {
+                originStyle: backOriginStyle({
+                    title: {
+                        alias: '提示',
+                        values: {
+                            title: ''
+                        },
+                        type:'input'
+                    },
+                    id: {
+                        alias: 'id',
+                        values: {
+                            id: ''
+                        },
+                        type:'input'
+                    },
+                    className: {
+                        alias: '类名',
+                        values: {
+                            className: ''
+                        },
+                        type:'input'
+                    },
+                    type: {
+                        alias: '类型',
+                        values: {
+                            type: ['','secondary' , 'success' , 'warning' , 'danger'],
+                        }
+                    },
+                    code: {
+                        alias: '代码样式',
+                        values: {
+                            code: ['false', 'true'],
+                        }
+                    },
+                    copyable: {
+                        alias: '可拷贝',
+                        values: {
+                            copyable: ['false', 'true'],
+                        }
+                    },
+                    delete: {
+                        alias: '删除线',
+                        values: {
+                            delete: ['false', 'true'],
+                        }
+                    },
+                    disabled: {
+                        alias: '禁用',
+                        values: {
+                            disabled: ['false', 'true'],
+                        }
+                    },
+                    ellipsis: {
+                        alias: '溢出省略',
+                        values: {
+                            ellipsis: ['false', 'true'],
+                        }
+                    },
+                    keyboard: {
+                        alias: '键盘',
+                        values: {
+                            keyboard: ['false', 'true'],
+                        }
+                    },
+                    mark: {
+                        alias: '标记',
+                        values: {
+                            mark: ['false', 'true'],
+                        }
+                    },
+                    strong: {
+                        alias: '加粗',
+                        values: {
+                            strong: ['false', 'true'],
+                        }
+                    },
+                    italic: {
+                        alias: '斜体',
+                        values: {
+                            italic: ['false', 'true'],
+                        }
+                    },
+                    underline: {
+                        alias: '下划线',
+                        values: {
+                            underline: ['false', 'true'],
+                        }
+                    },
+                })
+            }, ['onClick'])
+        },
+        Div:{
+            el: processOriginComp(Div, '区域'),
+            options: options('区域组件', {
+                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('区域')) })
+            }, {
+                originStyle: backOriginStyle({
+                    title: {
+                        alias: '提示',
+                        values: {
+                            title: ''
+                        },
+                        type:'input'
+                    },
+                    id: {
+                        alias: 'id',
+                        values: {
+                            id: ''
+                        },
+                        type:'input'
+                    },
+                    className: {
+                        alias: '类名',
+                        values: {
+                            className: ''
+                        },
+                        type:'input'
+                    },
+                    draggable: {
+                        alias: '可拖拽',
+                        values: {
+                            draggable: ['false', 'true'],
+                        }
+                    },
+                    contenteditable: {
+                        alias: '可编辑',
+                        values: {
+                            contenteditable: ['false', 'true'],
+                        }
+                    },
+                })
+            }, ['onClick'])
+        },
         Button: {
             el: processOriginComp(Button, '按钮'),
             options: options('按钮组件', {
@@ -150,6 +290,83 @@ const definedProps = {
                 })
             }, ['onClick', 'onMouseMove'])
         },
+        Title: {
+            el: processOriginComp(Title, '标题'),
+            options: options('标题组件', {
+                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('标题')) })
+            }, {
+                originStyle: backOriginStyle({
+                    level: {
+                        alias: '等级',
+                        values: {
+                            level: ''
+                        },
+                        type:'number'
+                    },
+                    type: {
+                        alias: '文本类型',
+                        values: {
+                            type: ['secondary', 'success', 'warning', 'danger'],
+                        }
+                    },
+                    disabled: {
+                        alias: '禁用',
+                        values: {
+                            disabled: ['false', 'true'],
+                        }
+                    },
+                    mark: {
+                        alias: '标记',
+                        values: {
+                            mark: ['false', 'true'],
+                        }
+                    },
+                    delete: {
+                        alias: '删除线',
+                        values: {
+                            delete: ['false', 'true'],
+                        }
+                    },
+                    underline: {
+                        alias: '下划线',
+                        values: {
+                            underline: ['false', 'true'],
+                        }
+                    },
+                    strong: {
+                        alias: '加粗',
+                        values: {
+                            strong: ['false', 'true'],
+                        }
+                    }
+                })
+            },['onClick']),
+        },
+    },
+    navigation: {
+        Pagination: {
+            el: processOriginComp(Pagination, '分页'),
+            options: options('分页组件', {
+                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('分页')) })
+            }, {
+                originStyle: {
+                    disabled: {
+                        alias: '禁用分页',
+                        values: {
+                            disabled: ['false', 'true'],
+                        }
+                    },
+                    hideOnSinglePage: {
+                        alias: '只有一页时是否隐藏分页器',
+                        values: {
+                            hideOnSinglePage: ['false', 'true'],
+                        }
+                    },
+                }
+            }),
+        },
+    },
+    dataEntry: {
         Input: {
             el: processOriginComp(Input, '输入框',{defaultValue:'输入框',width:100}),
             options: options('输入框组件', {
@@ -217,83 +434,13 @@ const definedProps = {
                     value: {
                         alias: '内容',
                         values: {
-                            value: '',
+                            value: '输入框',
                         },
                         type:'input'
                     },
                 }
             }, ['onChange', 'onPressEnter'])
         },
-        Title: {
-            el: processOriginComp(Title, '标题'),
-            options: options('标题组件', {
-                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('标题')) })
-            }, {
-                originStyle: backOriginStyle({
-                    type: {
-                        alias: '文本类型',
-                        values: {
-                            type: ['secondary', 'success', 'warning', 'danger'],
-                        }
-                    },
-                    disabled: {
-                        alias: '禁用',
-                        values: {
-                            disabled: ['false', 'true'],
-                        }
-                    },
-                    mark: {
-                        alias: '标记',
-                        values: {
-                            mark: ['false', 'true'],
-                        }
-                    },
-                    delete: {
-                        alias: '删除线',
-                        values: {
-                            delete: ['false', 'true'],
-                        }
-                    },
-                    underline: {
-                        alias: '下划线',
-                        values: {
-                            underline: ['false', 'true'],
-                        }
-                    },
-                    strong: {
-                        alias: '加粗',
-                        values: {
-                            strong: ['false', 'true'],
-                        }
-                    },
-                })
-            }),
-        },
-    },
-    navigation: {
-        Pagination: {
-            el: processOriginComp(Pagination, '分页'),
-            options: options('分页组件', {
-                moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('分页')) })
-            }, {
-                originStyle: {
-                    disabled: {
-                        alias: '禁用分页',
-                        values: {
-                            disabled: ['false', 'true'],
-                        }
-                    },
-                    hideOnSinglePage: {
-                        alias: '只有一页时是否隐藏分页器',
-                        values: {
-                            hideOnSinglePage: ['false', 'true'],
-                        }
-                    },
-                }
-            }),
-        },
-    },
-    dataEntry: {
         DatePicker: {
             el: processOriginComp(DatePicker, '选择框'),
             options: options('选择框组件', {
@@ -457,13 +604,13 @@ const definedProps = {
                     preview: {
                         alias: '预览参数',
                         values: {
-                            preview: ['false', 'true'],
+                            preview: ['true','false'],
                         }
                     },
                     src: {
                         alias: '图片地址',
                         values: {
-                            src: 'https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c62059dc7d9e4f4aa68a848bd1aa6739~tplv-k3u1fbpfcp-watermark.image?',
+                            src: 'https://raw.githubusercontent.com/GINFantasy/blog-img/main/img-image-20220807195459103.png',
                         },
                         type:'input'
                     },

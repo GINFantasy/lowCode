@@ -1,7 +1,7 @@
 import libs from '../components/Libs'
 
 // key值始终固定
-const key = 123456789
+const key = 'lowCodeData'
 const map = new Map(libs)
 const store = {
     getItem(type) {
@@ -24,7 +24,6 @@ const store = {
         }
     },
     setItem(data,id) {
-        console.log('set',data,id);
         window.localStorage.setItem(key, JSON.stringify({data,id}));
     },
     remove() {

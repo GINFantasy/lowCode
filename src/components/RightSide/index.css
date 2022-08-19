@@ -8,6 +8,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  animation: bounce-right-side 0.7s;
+  position: relative;
+  overflow: hidden;
 }
 .right-side .empty {
   margin-top: 350px;
@@ -15,6 +18,7 @@
 }
 .right-side .classify {
   height: 90%;
+  animation: bounce-right-side 0.7s;
 }
 .right-side .classify .classify-header {
   display: flex;
@@ -26,6 +30,7 @@
 }
 .right-side .classify .classify-header h4 {
   margin-bottom: 0!important;
+  animation: bounce-classify-title 0.3s;
 }
 .right-side .classify .del-comp {
   width: 30px;
@@ -44,11 +49,24 @@
 .right-side .classify .del-comp svg:hover {
   color: #f81d22;
 }
+.right-side .classify .o-s-p {
+  animation: bounce-o-s-p 0.5s forwards;
+}
+.right-side .classify .o-s-s-l {
+  animation: bounce-o-s-s-l 0.5s forwards;
+}
+.right-side .classify .o-s-s-r {
+  animation: bounce-o-s-s-r 0.5s forwards;
+}
+.right-side .classify .o-s-e {
+  animation: bounce-o-s-e 0.5s forwards;
+}
 .right-side .classify .one-set {
+  width: calc(100% - 10px);
   height: 90%;
-  margin-top: 20px;
-  border-top: 1px solid #999;
+  padding: 0 10px 20px 10px;
   overflow-y: auto;
+  position: absolute;
 }
 .right-side .classify .classify-props:not(.code-editor) {
   padding-right: 10px;
@@ -77,4 +95,64 @@
 }
 .right-side .classify .classify-props .props-module .event-select {
   width: 100%;
+}
+@keyframes bounce-right-side {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes bounce-classify-title {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes bounce-o-s-p {
+  0% {
+    opacity: 0;
+    left: 100%;
+  }
+  100% {
+    opacity: 1;
+    left: 0;
+  }
+}
+@keyframes bounce-o-s-s-l {
+  0% {
+    opacity: 0;
+    left: -100%;
+  }
+  100% {
+    opacity: 1;
+    left: 0;
+  }
+}
+@keyframes bounce-o-s-s-r {
+  0% {
+    opacity: 0;
+    left: 100%;
+  }
+  100% {
+    opacity: 1;
+    left: 0;
+  }
+}
+@keyframes bounce-o-s-e {
+  0% {
+    opacity: 0;
+    left: -100%;
+  }
+  100% {
+    opacity: 1;
+    left: 0;
+  }
 }

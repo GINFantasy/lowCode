@@ -1,9 +1,10 @@
 import { useContext } from 'react'
-import { Divider, Select, Empty,Input } from 'antd'
+import { Divider, Select, Empty,Input,InputNumber } from 'antd'
 
 import context from '../../../Context'
 
 const { Option } = Select
+const timer = { id: 0 }
 
 // 布尔字符串转布尔值
 const turnBoolStringToBoolean = (str)=>{
@@ -53,6 +54,22 @@ const Property = () => {
         setEditor(newEditor)
         setCurSelectedEl(next(curSelectedEl,false))
     }
+    const numberChange = (value, prop) => {
+        clearTimeout(timer.id)
+        timer.id = setTimeout(() => {
+            const next = v => ({
+                ...v,
+                originStyle: {
+                    ...originStyle,
+                    [prop]: value,
+                }
+            })
+            const newEditor = editor.map(v => v.key === key ? next(v) : v)
+            setEditor(newEditor)
+            setCurSelectedEl(next(curSelectedEl),false)
+        }, 300)
+    }
+
     return <>
         {
             !originStyleKey.length ? <Empty
@@ -77,10 +94,16 @@ const Property = () => {
                                             ?<Input
                                                 key={v+i}
                                                 className="input"
-                                                value={originStyle[v]}
+                                                defaultValue={values[valuesKey[i]]}
                                                 onChange={e => handleChangeText(e, v)}
                                             ></Input>
-                                            :<Select className="input"
+                                            : type === 'number' 
+                                             ?<InputNumber
+                                                className="input"
+                                                value={values[valuesKey[i]]}
+                                                onChange={e => numberChange(e, v)}
+                                            ></InputNumber>
+                                             :<Select className="input"
                                                 size="middle"
                                                 key={originStyle[v] || values[valuesKey[i]]}
                                                 defaultValue={()=>{
