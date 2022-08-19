@@ -30,7 +30,6 @@ const handleExport = (req, res) => {
         const acc = ({ error }) => res.send(error ? sFai : { ...sWin, url: loadUrl })
         combineAsyncError(queue, { acc })
     }
-    console.log('开导');
     fs.writeFile(url, text(editor), handle)
 }
 

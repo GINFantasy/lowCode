@@ -30,6 +30,7 @@ const handleReadme = () => {
 const App = () => {
   // editor表示画布中的所有组件
   const [editor, handleEditor] = useState(store.getItem('editor'))
+  const [preEditor,setPreEditor] = useState(store.getItem('editor'))
   // freshEl代表要新生成的组件
   const [contentSpinning,setContentSpinning] = useState(false);
   const [editorId,setEditorId] = useState(store.getItem('id'));
@@ -47,7 +48,10 @@ const App = () => {
     backEditor.push(oneSet[oneSet.length - 1])
     // 更新id
     setEditorId(nanoid());
-    handleEditor(oneSet)
+    handleEditor(prev=>{
+      setPreEditor(prev)
+      return oneSet;
+    })
   }
   const setCurSelectedEl = oneSet => {
     if (!oneSet) oneSet = defaultCurSideDrag
@@ -56,12 +60,13 @@ const App = () => {
   // 后退
   const handleBackEditor = () => {
     if (!backEditor.length) {
-      error('暂时没有要后退的操作')
-      return
+      return error('暂时没有要后退的操作')
     }
     forwardEditor.push(backEditor.pop())
+    // 获取上一次操作记录的组件
     const discard = backEditor[backEditor.length - 1]
-    const newData = editor.filter(v => v.key !== discard?.key)
+    // 获取其他组件
+    const newData = preEditor.filter(v => v.key !== discard?.key)
     setCurSelectedEl((!discard) ? false : discard)
     handleEditor((!discard) ? [] : [...newData, discard])
     success('已后退一次操作')
