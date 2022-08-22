@@ -83,10 +83,13 @@ const LeftSide = () => {
                 </li>
                 <li title='清空'>
                     <PopconfirmTemp
-                        title={'是否清空本地所保存的内容？'}
-                        onConfirm={handleClearStore}
+                        title={'您要清空所保存的哪项内容？'}
+                        onConfirm={()=>handleClearStore(true)}
+                        onCancel={()=>handleClearStore(false)}
                         icon={<CheckCircleOutlined style={{ color: "green" }} />}
-                        okText="清空"
+                        okText="全部"
+                        cancelText="仅本地缓存"
+                        showCancel
                     >
                         <ClearOutlined />
                     </PopconfirmTemp>
