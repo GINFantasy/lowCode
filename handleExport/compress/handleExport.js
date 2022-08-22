@@ -18,8 +18,7 @@ const sFai = { flag: false, text: '导出失败' }
 const sWin = { flag: true, text: '导出成功' }
 
 const handleExport = (req, res) => {
-    const editor = req.body.editor
-    console.log(editor);
+    const editor = req.body.editor.replace(/^'|'$/ig, '')
     const handle = async err => {
         if (err) return res.send(sFai)
         const flag = await go()

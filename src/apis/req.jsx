@@ -1,22 +1,22 @@
 const DOMAIN = 'https://api.funcjin.cn'
 const xhr = new XMLHttpRequest()
 
-const post = (data) => new Promise((resolve,reject) => {
+const post = (data) => new Promise((resolve, reject) => {
     xhr.open("POST", `${DOMAIN}/export`)
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
             if (xhr.status >= 200 && xhr.status < 300) {
                 resolve(JSON.parse(xhr.responseText))
-            }else{
+            } else {
                 reject('导出失败，请重试！');
             }
         }
     }
-    xhr.send(JSON.stringify(data));
+    xhr.send(`editor=${JSON.stringify(data)}`);
 })
 
-const download = (url) => new Promise((resolve,reject) => {
+const download = (url) => new Promise((resolve, reject) => {
     xhr.open("get", url);
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
@@ -28,7 +28,7 @@ const download = (url) => new Promise((resolve,reject) => {
                 a.download = `HighDance-${new Date().toISOString()}`
                 a.click();
                 resolve();
-            }else{
+            } else {
                 reject('导出失败，请重试！')
             }
         }
@@ -36,6 +36,6 @@ const download = (url) => new Promise((resolve,reject) => {
     xhr.send()
 })
 
-const req = { download,post,DOMAIN }
+const req = { download, post, DOMAIN }
 
 export default req
