@@ -78,7 +78,6 @@ const Center = () => {
         }
         return eventList
     }
-    console.log('center', editor)
     return (
         <div className="center" >
             <div
