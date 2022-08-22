@@ -11,7 +11,7 @@ import { antMsg,download } from '../Libs/tool'
 import './index.css'
 const screen = { pc: '100%', ipad: '768px', iphone: '375px' }
 const TooltipTemp = props => <Tooltip placement="bottom" {...props}></Tooltip>
-let exportUrl = 'http://localhost:9999/zip/compress.zip';
+let exportUrl = 'https://funcjin.cn/zip/lowcode.zip';
 
 // 检查版本是否一致
 const compareFileVersion = (editorid)=>{
@@ -31,7 +31,7 @@ const Tab = () => {
         const common = compareFileVersion(editorId);
         // 保存当前版本
         store.setItem(editor,editorId);
-        const exportArgs = [req.DOMAIN + '/export',editor]
+        const exportArgs = [editor]
         const acc = ({ error, result }) => {
             if(!error){
                 message.success('导出成功！');

@@ -1,9 +1,10 @@
-const DOMAIN = 'http://localhost:9999'
+const DOMAIN = 'https://api.funcjin.cn'
 const xhr = new XMLHttpRequest()
-const post = (url, data) => new Promise((resolve,reject) => {
-    xhr.open("post", url)
+
+const post = (data) => new Promise((resolve,reject) => {
+    xhr.open("POST", `${DOMAIN}/export`)
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
             if (xhr.status >= 200 && xhr.status < 300) {
                 resolve(JSON.parse(xhr.responseText))
@@ -12,7 +13,7 @@ const post = (url, data) => new Promise((resolve,reject) => {
             }
         }
     }
-    xhr.send(data)
+    xhr.send(JSON.stringify(data));
 })
 
 const download = (url) => new Promise((resolve,reject) => {

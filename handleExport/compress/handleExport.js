@@ -3,7 +3,7 @@ const exec = require('child_process').exec
 const { combineAsyncError } = require('combine-async-error')
 const { compress } = require('./compress')
 
-const loadUrl = 'http://localhost:9999/zip/compress.zip'
+const loadUrl = 'https://funcjin.cn/zip/lowcode.zip'
 // 处理如何写入文件
 const url = './src/components/Preview/editor.jsx'
 const text = editor => `const editor = ${editor};export default editor;`
@@ -18,7 +18,8 @@ const sFai = { flag: false, text: '导出失败' }
 const sWin = { flag: true, text: '导出成功' }
 
 const handleExport = (req, res) => {
-    const { editor } = req.body
+    const editor = req.body.editor
+    console.log(editor);
     const handle = async err => {
         if (err) return res.send(sFai)
         const flag = await go()

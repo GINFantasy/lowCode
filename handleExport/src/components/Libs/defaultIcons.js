@@ -40,7 +40,15 @@ import {
     TrophyOutlined,
     ScanOutlined,
     RedEnvelopeOutlined,
-    RestOutlined
+    RestOutlined,
+    SettingTwoTone,
+    LikeTwoTone,
+    MessageTwoTone,
+    FireTwoTone,
+    HeartTwoTone,
+    MailTwoTone,
+    StarTwoTone,
+
 } from '@ant-design/icons'
 
 const defaultIcons = {
@@ -85,7 +93,14 @@ const defaultIcons = {
     TrophyOutlined,
     ScanOutlined,
     RedEnvelopeOutlined,
-    RestOutlined
+    RestOutlined,
+    SettingTwoTone,
+    LikeTwoTone,
+    MessageTwoTone,
+    FireTwoTone,
+    HeartTwoTone,
+    MailTwoTone,
+    StarTwoTone, 
 }
 
 export default defaultIcons

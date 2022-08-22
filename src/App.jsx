@@ -38,9 +38,9 @@ const App = () => {
   const [canvasWidth, setCanvasWidth] = useState('100%')
   const [curSelectedEl, handleCurSelectedEl] = useState(defaultCurSideDrag)
   const { Provider } = context
-  const handleClearStore = () => {
+  const handleClearStore = (isSetEditor) => {
     store.remove()
-    setEditor([])
+    if(isSetEditor) setEditor([])
     success('已清空')
   }
   // 拦截所有修改editor的操作，并追加至历史记录
@@ -100,6 +100,7 @@ const App = () => {
           <RightSide />
         </div>
       </Provider>
+      <a className='link-cv' href='https://www.miit.gov.cn/'>鲁ICP备2021007041号-3</a>
     </section >
   )
 }
