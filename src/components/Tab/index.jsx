@@ -34,15 +34,16 @@ const Tab = () => {
         store.setItem(editor,editorId);
         const exportArgs = [editor]
         const acc = ({ error, result }) => {
+            console.log(error,result);
             const flag = result.every(v=>v.data?.msg?.flag === true);
-            if(flag || result.length!==0){
+            if(!flag || result.length===0){
+                message.error('导出失败！');
+                setEditorId('');
+            }else{
                 message.success('导出成功！');
                 const { url } = result[0].data.msg;
                 exportUrl = url;
                 download(url);
-            }else{
-                message.error('导出失败！');
-                setEditorId('');
             }
             setContentSpinning(false)
         }
