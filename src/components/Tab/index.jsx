@@ -34,7 +34,6 @@ const Tab = () => {
         store.setItem(editor,editorId);
         const exportArgs = [editor]
         const acc = ({ error, result }) => {
-            console.log(error,result);
             const flag = result.every(v=>v.data?.msg?.flag === true);
             if(!flag || result.length===0){
                 message.error('导出失败！');

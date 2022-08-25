@@ -631,7 +631,7 @@ const definedProps = {
             },['onError']),
         },
         Video: {
-            el: processOriginComp(Video, '视频',{autoplay:'autoplay',poster:'https://raw.githubusercontent.com/GINFantasy/blog-img/main/img-image-20220807195348225.png'}),
+            el: processOriginComp(Video, '视频',{autoPlay:'autoPlay',poster:'https://raw.githubusercontent.com/GINFantasy/blog-img/main/img-image-20220807195348225.png'}),
             options: options('视频组件', {
                 moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('视频')) })
             }, {

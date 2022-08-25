@@ -462,10 +462,10 @@ const definedProps = {
                 moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('走马灯组件')) })
             }, {
                 originStyle: {
-                    autoplay: {
+                    autoPlay: {
                         alias: '是否自动切换',
                         values: {
-                            autoplay: ['false', 'true'],
+                            autoPlay: ['false', 'true'],
                         }
                     },
                     dotPosition: {
