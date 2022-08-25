@@ -70,9 +70,9 @@ const processOriginComp = (Comp, text = '', options) => props => {
 }
 // 包裹图片组件
 const processImageOriginComp = (Comp,options) => props => {
-    const {className,style} = props;
+    const {className,style,src} = props;
     return <div style={style}  src={null} className={`lc-image-ct ${className}`}>
-        <Comp {...options} {...props} style={{}} ></Comp>
+        <Comp {...options} {...props} src={src || 'https://raw.githubusercontent.com/GINFantasy/blog-img/main/img-image-20220807195459103.png'}  style={{}} ></Comp>
     </div>
 }
 const options = (name, more, origin, e) => {
@@ -93,7 +93,6 @@ const backOriginStyle = (v = {}) => ({ ...v })
 
 // 图片初始配置
 const imageOptions = {
-    src:'https://raw.githubusercontent.com/GINFantasy/blog-img/main/img-image-20220807195459103.png',
     width:100,
     height:100
 }
@@ -610,7 +609,7 @@ const definedProps = {
                     src: {
                         alias: '图片地址',
                         values: {
-                            src: 'https://raw.githubusercontent.com/GINFantasy/blog-img/main/img-image-20220807195459103.png',
+                            src: '',
                         },
                         type:'input'
                     },
@@ -632,7 +631,7 @@ const definedProps = {
             },['onError']),
         },
         Video: {
-            el: processOriginComp(Video, '视频',{poster:'https://raw.githubusercontent.com/GINFantasy/blog-img/main/img-image-20220807195348225.png'}),
+            el: processOriginComp(Video, '视频',{autoplay:'autoplay',poster:'https://raw.githubusercontent.com/GINFantasy/blog-img/main/img-image-20220807195348225.png'}),
             options: options('视频组件', {
                 moreProps: onMorePropsConfig({ text: inMorePropsConfig(defaultCompName('视频')) })
             }, {
@@ -654,7 +653,7 @@ const definedProps = {
                     autoplay: {
                         alias: '自动播放',
                         values: {
-                            autoPlay: ['', 'autoplay'],
+                            autoPlay: ['autoplay', ''],
                         }
                     },
                     controls: {

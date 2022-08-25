@@ -86,40 +86,38 @@ const Property = () => {
                         <Divider className="prop-divider" orientation={i % 2 !== 0 ? 'right' : 'left'} plain>{alias}</Divider>
                         <div className="props-module">
                             {
-                                valuesKey.map((v, i) => (
-                                    <div className="props-single" key={i}>
-                                        <span className="props-title">{valuesKey[i]}:</span>
+                                valuesKey.map((v, i) => (<div className="props-single" key={i}>
+                                <span className="props-title">{valuesKey[i]}:</span>
+                                {
+                                    type === 'input' 
+                                    ?<Input
+                                        key={v+i}
+                                        className="input"
+                                        defaultValue={originStyle[v] || values[v]}
+                                        onChange={e => handleChangeText(e, v)}
+                                    ></Input>
+                                    : type === 'number' 
+                                     ?<InputNumber
+                                        className="input"
+                                        value={originStyle[v] || values[v]}
+                                        onChange={e => numberChange(e, v)}
+                                    ></InputNumber>
+                                     :<Select className="input"
+                                        size="middle"
+                                        key={originStyle[v] || values[v]}
+                                        defaultValue={()=>{
+                                            return turnBooleanToBoolString(originStyle[v]) || values[valuesKey[i]]
+                                        }}
+                                        onChange={e => selectChange(values[v][e], v)}
+                                    >
                                         {
-                                            type === 'input' 
-                                            ?<Input
-                                                key={v+i}
-                                                className="input"
-                                                defaultValue={values[valuesKey[i]]}
-                                                onChange={e => handleChangeText(e, v)}
-                                            ></Input>
-                                            : type === 'number' 
-                                             ?<InputNumber
-                                                className="input"
-                                                value={values[valuesKey[i]]}
-                                                onChange={e => numberChange(e, v)}
-                                            ></InputNumber>
-                                             :<Select className="input"
-                                                size="middle"
-                                                key={originStyle[v] || values[valuesKey[i]]}
-                                                defaultValue={()=>{
-                                                    return turnBooleanToBoolString(originStyle[v]) || values[valuesKey[i]]
-                                                }}
-                                                onChange={e => selectChange(values[v][e], v)}
-                                            >
-                                                {
-                                                    values[valuesKey[i]].map((v2, i2) => {
-                                                        return <Option key={i2}>{v2}</Option>
-                                                    })
-                                                }
-                                            </Select>
+                                            values[valuesKey[i]].map((v2, i2) => {
+                                                return <Option key={i2}>{v2}</Option>
+                                            })
                                         }
-                                    </div>
-                                ))
+                                    </Select>
+                                }
+                            </div>))
                             }
                         </div>
                     </div>

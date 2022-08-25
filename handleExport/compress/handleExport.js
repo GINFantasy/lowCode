@@ -18,7 +18,9 @@ const sFai = { flag: false, text: '导出失败' }
 const sWin = { flag: true, text: '导出成功' }
 
 const handleExport = (req, res) => {
-    const editor = req.body.editor.replace(/^'|'$/ig, '')
+    //const editor = req.body.editor.replace(/^'|'$/ig, '')
+    const editor = req.body;
+    console.log(editor);
     const handle = async err => {
         if (err) return res.send(sFai)
         const flag = await go()
@@ -30,7 +32,7 @@ const handleExport = (req, res) => {
         const acc = ({ error }) => res.send(error ? sFai : { ...sWin, url: loadUrl })
         combineAsyncError(queue, { acc })
     }
-    fs.writeFile(url, text(editor), handle)
+    fs.writeFile(url, text(JSON.stringify(editor)), handle)
 }
 
 module.exports = { handleExport }

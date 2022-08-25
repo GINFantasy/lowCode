@@ -4,12 +4,12 @@
  * @Autor: GuluGuluu
  * @Date: 2022-08-07 18:23:55
  * @LastEditors: GuluGuluu
- * @LastEditTime: 2022-08-17 17:00:44
+ * @LastEditTime: 2022-08-25 20:47:51
  */
 function Video(props){
-    const {className,style} = props;
+    const {className,style,src} = props;
     return <div {...props} src={null} style={style} className={`lc-vedio-ct ${className}`}>
-        <video poster='' {...props} style={{}} className='lc-video'></video>
+        <video poster='' {...props} style={{}} src={src} className='lc-video'></video>
     </div>
 }
 
