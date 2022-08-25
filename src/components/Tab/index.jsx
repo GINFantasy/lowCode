@@ -12,6 +12,7 @@ import './index.css'
 const screen = { pc: '100%', ipad: '768px', iphone: '375px' }
 const TooltipTemp = props => <Tooltip placement="bottom" {...props}></Tooltip>
 let exportUrl = 'https://funcjin.cn/zip/lowcode.zip';
+//let exportUrl = 'https://localhost:9999/zip/lowcode.zip';
 
 // 检查版本是否一致
 const compareFileVersion = (editorid)=>{
@@ -34,7 +35,7 @@ const Tab = () => {
         const exportArgs = [editor]
         const acc = ({ error, result }) => {
             const flag = result.every(v=>v.data?.msg?.flag === true);
-            if(flag && result.length===0){
+            if(flag || result.length!==0){
                 message.success('导出成功！');
                 const { url } = result[0].data.msg;
                 exportUrl = url;

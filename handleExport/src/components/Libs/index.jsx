@@ -650,10 +650,10 @@ const definedProps = {
                         },
                         type:'input'
                     },
-                    autoplay: {
+                    autoPlay: {
                         alias: '自动播放',
                         values: {
-                            autoPlay: ['autoplay', ''],
+                            autoPlay: ['autoPlay', ''],
                         }
                     },
                     controls: {

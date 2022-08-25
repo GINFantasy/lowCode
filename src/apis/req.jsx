@@ -1,5 +1,5 @@
-//const DOMAIN = 'https://api.funcjin.cn'
-const DOMAIN = 'http://localhost:9999'
+const DOMAIN = 'https://api.funcjin.cn'
+//const DOMAIN = 'http://localhost:9999'
 const xhr = new XMLHttpRequest()
 
 const post = (data) => new Promise((resolve, reject) => {

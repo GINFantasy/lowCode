@@ -7,7 +7,10 @@ const compress = fileName => new Promise((resolve, rejected) => {
     if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir)
     const output = fs.createWriteStream(`${outputDir}/${fileName}`)
     const archive = archiver('zip', { zlib: { level: 9 } })
-    output.on('close', resolve).on('error', rejected)
+    output.on('close', resolve).on('error', (err)=>{
+        console.log('compress',err);
+        rejected(err);
+    })
     archive.pipe(output)
     archive.directory('./build', false)
     archive.finalize()
