@@ -71,8 +71,19 @@ const processOriginComp = (Comp, text = '', options) => props => {
 // 包裹图片组件
 const processImageOriginComp = (Comp,options) => props => {
     const {className,style,src} = props;
+    let width = 100;
+    let height = 100;
+    if(style){
+        width = style.width ? style.width : width;
+        height = style.height ? style.height : height;
+    }
     return <div style={style}  src={null} className={`lc-image-ct ${className}`}>
-        <Comp {...options} {...props} src={src || 'https://raw.githubusercontent.com/GINFantasy/blog-img/main/img-image-20220807195459103.png'}  style={{}} ></Comp>
+        <Comp 
+        {...options} 
+        {...props} 
+        src={src || 'https://raw.githubusercontent.com/GINFantasy/blog-img/main/img-image-20220807195459103.png'} 
+        style={{...style,top:0,left:0,width,height}}
+        ></Comp>
     </div>
 }
 const options = (name, more, origin, e) => {
